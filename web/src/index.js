@@ -1,37 +1,34 @@
-// import "babel-polyfill"
+import "babel-polyfill"
+import "./index.less"
 import React from "react"
 import ReactDOM from "react-dom"
-// import {AppContainer} from "react-hot-loader"
+import { AppContainer as HMRContainer } from "react-hot-loader"
+import { Provider } from "react-redux"
+import { BrowserRouter } from "react-router-dom"
+import store from "store"
+import quickClick from "quickclick"
+import i18n from "i18n-js"
+import App from "components/app"
 
-// import {Provider} from "react-redux"
-// import store from "store"
+i18n.defaultLocale = "en"
 
-// const App = () => import("app")
-// import App from "app"
+quickClick(document.body)
 
-// import "index.less"
-
-// function render(Comp) {
+function render(Comp) {
   ReactDOM.render(
-      <div>123</div>,
-    document.getElementById("root")
+    <HMRContainer>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Comp/>
+        </BrowserRouter>
+      </Provider>
+    </HMRContainer>,
+    document.getElementById("root"),
   )
-// }
+}
 
-// function init() {
-//   render(App)
-//   if (module.hot) {
-//     module.hot.accept("app", () => {
-//       const NewApp = require("app").default
-//       render(NewApp)
-//     })
-//   }
-// }
+render(App)
 
-// if (window.Intl) {
-//   init()
-// } else {
-//   require.ensure([], (require) => {
-//     init()
-//   })
-// }
+if (module.hot) {
+  module.hot.accept("components/app", () => render(App))
+}

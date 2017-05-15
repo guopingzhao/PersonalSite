@@ -1,13 +1,20 @@
 {
-  "presets": ["react", "stage-3"],
-  "plugins": [
-    "syntax-dynamic-import"
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "android >= 4.4"]
+      },
+      "modules": false,
+      "loose": true,
+      "useBuiltIns": true
+    }],
+    "react"
   ],
-  "env": {
-    "dev": {
-      "plugins": [
-        "react-hot-loader/babel"
-      ]
-    }
-  }
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-object-rest-spread",
+    "transform-class-properties",
+    "syntax-dynamic-import",
+    "react-hot-loader/babel"
+  ]
 }

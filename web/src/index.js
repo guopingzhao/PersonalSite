@@ -5,12 +5,18 @@ import ReactDOM from "react-dom"
 import { AppContainer as HMRContainer } from "react-hot-loader"
 import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
+import {IntlProvider, addLocaleData} from "react-intl"
+import en from 'react-intl/locale-data/en' 
+import zh from 'react-intl/locale-data/zh'
 import store from "store"
 import quickClick from "quickclick"
-import i18n from "i18n-js"
 import App from "components/app"
 
-i18n.defaultLocale = "en"
+import localeData from "libs/langs"
+
+addLocaleData([...en, ...zh])
+
+console.log(window.App)
 
 quickClick(document.body)
 
@@ -18,9 +24,11 @@ function render(Comp) {
   ReactDOM.render(
     <HMRContainer>
       <Provider store={store}>
-        <BrowserRouter>
-          <Comp/>
-        </BrowserRouter>
+        <IntlProvider locale="zh" messages={localeData.zh}>
+          <BrowserRouter>
+            <Comp/>
+          </BrowserRouter>
+        </IntlProvider>
       </Provider>
     </HMRContainer>,
     document.getElementById("root"),

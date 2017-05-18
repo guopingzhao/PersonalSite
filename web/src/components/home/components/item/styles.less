@@ -1,0 +1,19 @@
+.common-item{
+  flex: 1;
+  overflow: hidden;
+  width: var(--home-item-width);
+  height: 100%;
+  .void-item, .menu-item{
+    height: 100%;
+  }
+
+  .void-item{
+    opacity: .2;
+    transition: opacity 3s;
+  }
+
+  .void-item:hover{
+    opacity: .4;
+    transition-duration: .5s;
+  }
+}

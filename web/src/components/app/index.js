@@ -4,13 +4,15 @@ import Home from "components/home"
 import { connect } from "react-redux"
 
 @withRouter
-@connect(({ app }) => ({
-  locale: app.locale,
+@connect((state) => ({
+  state
 }))
 export default class App extends PureComponent {
   render() {
     return (
-      <div>123</div>
+      <Switch>
+        <Route path="/" component={Home}/>>
+      </Switch>
     )
   }
 }

@@ -1,16 +1,36 @@
+
 .home{
-  display: flex;
-  flex-wrap: wrap;
-  &-row{
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  &-nav{
     display: flex;
-    margin: .5px 0;
-    height: var(--home-item-height);
-    width: 100%;
+    flex-wrap: wrap;
   }
   &-item{
+    flex: 1 0 auto;
+    margin: .5px;
+    height: var(--home-item-height);
+    width: var(--home-item-width);
+    min-width: .9rem;
+
+    &-name{
+      color: #fff;
+    }
     &>div{
-      border-radius: 5px;
-      margin: 0 .5px;     
+      border-radius: 5px;   
+    }
+  }
+
+  &-control{
+    position: absolute;
+    bottom: 0;
+    padding: .1rem .2rem;
+    font-size: .3rem;
+    font-family: iconfont;
+
+    .icon{
+      cursor: pointer;
     }
   }
 }

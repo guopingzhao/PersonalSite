@@ -1,8 +1,10 @@
 @import (css) "~normalize.css/normalize.css";
+@import (css) "font/iconfont/iconfont.css";
 
 html, body {
   width: 100vw;
   height: 100vh;
+  font-size: 100px;
   &::-webkit-scrollbar{
     display: none;
   }
@@ -10,4 +12,17 @@ html, body {
 
 #root {
   height: 100%;
+  font-size: 16px;
+}
+
+a{
+  text-decoration: none;
+}
+
+.icon{
+  font-family: iconfont;
+  font-size: .4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

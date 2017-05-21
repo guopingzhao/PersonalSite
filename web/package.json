@@ -5,7 +5,7 @@
   "author": "zhaoguoping",
   "license": "ISC",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "rmdir buile",
     "dev": "webpack-dev-server --open",
     "lint": "prettier --trailing-comma all --no-semi --write \"src/**/*.js\" && eslint_d --fix src",
     "prod": "npm run clean && webpack --env.prod",
@@ -32,6 +32,8 @@
     "babel-preset-react": "^6.24.1",
     "classnames": "^2.2.5",
     "css-loader": "^0.28.1",
+    "echarts": "^3.5.4",
+    "echarts-for-react": "^1.2.5",
     "eslint": "^3.19.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-react": "^7.0.0",

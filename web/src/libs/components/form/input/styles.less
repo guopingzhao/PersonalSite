@@ -1,0 +1,28 @@
+.hy-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, .3);
+  border-radius: 4px;
+  height: 30px;
+  &.on {
+    border: 1px solid rgb(77, 144, 254);
+    box-shadow: 0 0 0 2px rgba(16, 142, 233, 0.2);
+  }
+  &.error {
+    border: 1px solid #f04134 !important;
+    box-shadow: 0 0 0 2px rgba(240, 65, 52, .2) !important;
+  }
+  .icon {
+    font-size: 14px;
+    padding: 0 3px;
+    flex: 0 0 auto;
+  }
+  input {
+    border: none;
+    outline: none;
+    padding: 0;
+    height: 100%;
+    flex: 1 1 1px;
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,127 @@
+  @color: #064497;
+  .hy-page{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 30px;
+    padding-right: 10px;
+    width: 100%;
+    height: 56px;
+    font-size: 12px;
+    .page-item{
+      margin: 0 4px;
+      padding: 0 3px;
+      border: 1px solid rgba(0, 0, 0, .3);
+      border-radius: 3px;
+      font-size: 12px;
+      line-height: 24px;
+      cursor: pointer;
+      &.disabled{
+        cursor: not-allowed;
+        &:hover{
+          background-color: transparent;
+          color: #000;
+          border: 1px solid rgba(0, 0, 0, .3);
+        }        
+      }
+      &.on,&:hover{
+        background-color: @color;
+        border-color: @color;
+        color: #fff;
+      }
+      .number{
+        display: inline-block;
+        width: 20px;
+        height: 24px;
+        text-align: center;
+      }
+      &-prev:after, &-next:after, .leftover:after{
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+      }
+      &-prev:after{
+        content: "<"
+      }
+      &-next:after{
+        content: ">"
+      }
+      .leftover{
+        &.prev:after,&.next:after{
+          content: "···"
+        }
+        &.prev:hover{
+          &:after{
+            content: "<<"
+          }
+        }
+        &.next:hover{
+          &:after{
+            content: ">>";
+          }
+        }
+      }
+    } 
+
+    .pageSize-select{
+      display: flex;
+      align-items: center;
+      padding: 0 20px 0 10px;;
+      margin-right: 14px;
+      margin-left: 10px;
+      border: 1px solid @color;
+      color: @color;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      cursor: pointer;
+      &.on{
+        overflow: visible;
+      }
+      &:after{
+        content: ">";
+        position: absolute;
+        right: 0;
+        margin-right: 5px;
+        transform: rotate(90deg);
+      }
+      &.on:after{
+        transform: rotate(-90deg);
+        margin-right: 7px;
+      }
+      .pageSize-option{
+        position: absolute;
+        left: 0;
+        bottom: calc(~"100% + 1px");
+        text-align: center;
+        width: 100%;
+        border-radius: 3px;
+        overflow: hidden;
+        background-color: #fff;
+        &-select{
+          cursor: pointer;
+          height: 28px;
+          line-height: 28px;
+          &.on{
+            background-color: #eef;
+          }
+          &:hover{
+            background-color: #eef;
+          }
+        }
+      }
+    }
+    .jump{
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      input{
+        margin-left: 5px;
+        height: 26px;
+        width: 40px;
+        border: 1px solid rgba(0, 0, 0, .3);
+        border-radius: 3px;
+      }
+    }
+  }

@@ -8,8 +8,8 @@ export const menus = [
     path: "graphic"
   },
   { index: 3,
-    name: "MyBlog",
-    path: "blog"
+    name: "表格",
+    path: "table"
   },
   { index: 4,
     name: "MyBlog",
@@ -49,4 +49,4 @@ export const menus = [
   }
 ]
 
-export const {style} = document.documentElement
+export const {style, clientWidth, clientHeight} = document.documentElement

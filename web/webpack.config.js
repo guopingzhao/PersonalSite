@@ -4,7 +4,6 @@ const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin") 
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const autoprefixer = require("autoprefixer")                                  //自动加前缀
-const CptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin") //压缩css
 
 const PORT = 8000
 
@@ -83,8 +82,8 @@ module.exports = env => {
                 options: {
                   sourceMap: true,
                   plugins: [
-                    require("autoprefixer")({
-                      browsers: ["last 2 versions", "android >= 4.4"],
+                    autoprefixer({
+                      browsers: ["last 5 versions", "android >= 4.0", "ios >= 7.0"],
                     }),
                   ],
                 },
@@ -111,8 +110,15 @@ module.exports = env => {
         historyApiFallback: true,
         compress: false,
         stats: { colors: true },
-        host: "0.0.0.0",
-        port: PORT
+        host: "localhost",
+        port: PORT,
+        proxy: [
+          {
+            context: ['/test/**'],
+            target: 'http://localhost:3000',
+            secure: false
+          }
+        ]
       },
     })
   } else {
@@ -132,14 +138,15 @@ module.exports = env => {
             test: /\.less$/,
             use: ExtractTextPlugin.extract({
               fallback: "style-loader",
+              publicPath: "../",
               use: [
                 "css-loader",
                 {
                   loader: "postcss-loader",
                   options: {
                     plugins: [
-                      require("autoprefixer")({
-                        browsers: ["last 2 versions", "android >= 4.4"],
+                      autoprefixer({
+                        browsers: ["last 5 versions", "android >= 4.0", "ios >= 7.0"],
                       }),
                     ],
                   },
@@ -155,11 +162,11 @@ module.exports = env => {
           filename: "css/[name].[contenthash:8].css",
           allChunks: true,
         }),
-        new CptimizeCssAssetsPlugin({          
-          cssProcessor: require("cssnano"),
-          cssProcessorOptions: {discardComments: {removeAll: true }}, 
-          canPrint: true        
-        }),
+        // new CptimizeCssAssetsPlugin({           //导致移除部分有效代码
+        //   cssProcessor: require("cssnano"),
+        //   cssProcessorOptions: {discardComments: {removeAll: true }}, 
+        //   canPrint: true        
+        // }),
         new webpack.DefinePlugin({
           DEBUG: false,
           "process.env.NODE_ENV": JSON.stringify("production"),

@@ -1,3 +1,5 @@
 export default {
-  MyBlog: "my blog"
+  MyBlog: "my blog",
+  GraphicEditing: "graphic editing",
+  Menu: "menu"
 }

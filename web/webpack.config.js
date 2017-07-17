@@ -1,24 +1,14 @@
-const webpack = require("webpack")
 const merge = require("webpack-merge")
 const path = require("path")
-const HtmlWebpackPlugin = require("html-webpack-plugin") 
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const autoprefixer = require("autoprefixer")                                  //自动加前缀
-
-const PORT = 8000
 
 module.exports = env => {
   const baseConfig = {
-    output: {
-      path: path.resolve("build"),
-      filename: "js/[name].js",
-      chunkFilename: "js/[id].js"
-    },
-
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           include: [path.resolve("src")],
           loader: "babel-loader",
         },
@@ -43,161 +33,31 @@ module.exports = env => {
       ],
     },
     resolve: {
-        modules: [
-          path.resolve("src"),
-          path.resolve("."),
-          "node_modules"
-        ]
-      },
+      modules: [
+        path.resolve("src"),
+        path.resolve("."),
+        "node_modules"
+      ]
+    },
     plugins: [
       new HtmlWebpackPlugin({
         filename: "index.html",
         template: "src/index.html",
         inject: true,
-        chunks: ["vender","index"],
-      }),
-    ],
+        chunks: ["vender", "used-twice", "index"],
+      })
+    ]
   }
 
   if (!env || !env.prod) {
-    return merge(baseConfig, {
-      entry: {
-        index: [
-          "react-hot-loader/patch",
-          `webpack-dev-server/client?http://localhost:${PORT}`,
-          "webpack/hot/only-dev-server",
-          "./src/index.js",
-        ],
-      },
+    return merge(baseConfig, require("./config/dev"))
+  }
 
-      module: {
-        rules: [
-          {
-            test: /\.less$/,
-            use: [
-              { loader: "style-loader", options: { sourceMap: true } },
-              { loader: "css-loader", options: { sourceMap: true } },
-              {
-                loader: "postcss-loader",
-                options: {
-                  sourceMap: true,
-                  plugins: [
-                    autoprefixer({
-                      browsers: ["last 5 versions", "android >= 4.0", "ios >= 7.0"],
-                    }),
-                  ],
-                },
-              },
-              { loader: "less-loader", options: { sourceMap: true } },
-            ],
-          },
-        ],
-      },
-      plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new webpack.DefinePlugin({
-          DEBUG: true,
-        }),
-      ],
+  if (env && env.prod === "test") {
+    return merge(baseConfig, require("./config/test"))
+  }
 
-      devtool: "cheap-source-map",
-
-      devServer: {
-        contentBase: path.resolve("dist"),
-        hot: true,
-        publicPath: "/",
-        historyApiFallback: true,
-        compress: false,
-        stats: { colors: true },
-        host: "localhost",
-        port: PORT,
-        proxy: [
-          {
-            context: ['/test/**'],
-            target: 'http://localhost:3000',
-            secure: false
-          }
-        ]
-      },
-    })
-  } else {
-    return merge(baseConfig, {
-      entry: {
-        index: "./src/index.js"
-      },
-
-      output: {
-        filename: "js/[name].[chunkhash:8].js",
-        chunkFilename: "js/[id].[chunkhash:8].js",
-      },
-
-      module: {
-        rules: [
-          {
-            test: /\.less$/,
-            use: ExtractTextPlugin.extract({
-              fallback: "style-loader",
-              publicPath: "../",
-              use: [
-                "css-loader",
-                {
-                  loader: "postcss-loader",
-                  options: {
-                    plugins: [
-                      autoprefixer({
-                        browsers: ["last 5 versions", "android >= 4.0", "ios >= 7.0"],
-                      }),
-                    ],
-                  },
-                },
-                "less-loader",
-              ],
-            }),
-          },
-        ],
-      },
-      plugins: [
-        new ExtractTextPlugin({
-          filename: "css/[name].[contenthash:8].css",
-          allChunks: true,
-        }),
-        // new CptimizeCssAssetsPlugin({           //导致移除部分有效代码
-        //   cssProcessor: require("cssnano"),
-        //   cssProcessorOptions: {discardComments: {removeAll: true }}, 
-        //   canPrint: true        
-        // }),
-        new webpack.DefinePlugin({
-          DEBUG: false,
-          "process.env.NODE_ENV": JSON.stringify("production"),
-        }),
-        new webpack.LoaderOptionsPlugin({
-          minimize: true,
-          debug: false,
-        }),
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({   //在多个路由模块中使用的只引用一次
-          async: "common-in-lazy",        
-          minChunks: ({resource} = {} )=>(
-            resource &&
-            resource.includes("node_modules") &&
-            /axios/.test(resource)
-          )
-        }),
-        new webpack.optimize.CommonsChunkPlugin({   //引用两次以上的模块加入used-twice中
-          async: "used-twice",
-          minChunks: 2
-        }),
-        new webpack.optimize.CommonsChunkPlugin({   //自动化分离第三方依赖
-          name: "vender",
-          filename: "js/common.[chunkhash:8].js",
-          minChunks: ({resource})=>(
-            resource &&
-            resource.indexOf("node_modules") >=0 &&
-            resource.match(/\.js$/)
-          )
-        })
-      ],
-    })
+  if (env && env.prod === "prod") {
+    return merge(baseConfig, require("./config/prod"))
   }
 }

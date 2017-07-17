@@ -24,5 +24,21 @@
     height: 100%;
     flex: 1 1 1px;
     background-color: transparent;
+    &::-webkit-input-placeholder {
+      /* WebKit browsers */
+      color: #ccc;
+    }
+    &:-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: #ccc;
+    }
+    &::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      color: #ccc;
+    }
+    &:-ms-input-placeholder {
+      /* Internet Explorer 10+ */
+      color: #ccc;
+    }
   }
 }

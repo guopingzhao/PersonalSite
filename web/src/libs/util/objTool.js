@@ -66,14 +66,14 @@ export function assign(...objs){
 function readObj(obj = {}, pathStr, defaultValue, isTrue) {
   if (obj[pathStr]) return obj[pathStr]
   let pathline = pathStr.split(".")
-  let value = obj[path.shift()],
+  let value = obj[pathline.shift()],
     isKey = false
   for (let i = 0, len = pathline.length; i < len; i++) {
     if (value) {
       if (value.hasOwnProperty) {
-        isKey = value.hasOwnProperty(path[i])
+        isKey = value.hasOwnProperty(pathline[i])
       }
-      value = value[path[i]]
+      value = value[pathline[i]]
     } else {
       return defaultValue || value
     }

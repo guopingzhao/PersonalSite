@@ -1,27 +1,26 @@
-import React, {PureComponent} from "react"
-const {cloneElement: clone} = React
+import React, { PureComponent } from "react"
+const { cloneElement: clone } = React
 import cls from "classnames"
-import {read, wirte} from "./utils/readwirte"
+import { read, wirte } from "./utils/readwirte"
 import validators from "./utils/validators"
 
 export default function create(options = {}) {
-  const {golbalRules, mapProps, onValuesChange} = options
+  const { golbalRules, mapProps, onValuesChange } = options
   return (Com) => {
     return class L extends PureComponent {
       rules = {}
       childNum = {}
       initialValues = {}
       mapProps = {}
-      constructor(props){
+      constructor(props) {
         super(props)
-        if(mapProps) {
+        if (mapProps) {
           this.mapProps = mapProps(props)
         }
         this.state = {
           errors: {},
           values: this.mapProps.formValues || {}
         }
-
       }
       form = {
         getFieldsValue: (fields) => {
@@ -33,20 +32,24 @@ export default function create(options = {}) {
           return read(this.state.values, `${field}`)
         },
         setFieldsValue: (values) => {
-          
+          this.setState({
+            values: assign(this.state.values, values)
+          })
         },
         setFields: (values, errors) => {
-          
+          this.setState({
+            values: assign(this.state.values, values),
+            errors: assign(this.state.errors, errors),
+          })
         },
         validateFields: (fields, cb) => {
           let type = typeof fields
-
-          switch(type){
+          switch (type) {
             case "function": {
               let errors = {}
               for (let v of Object.keys(this.rules)) {
-                if(this.childNum[v]){
-                  for(let i = 0, len = this.childNum[v]; i < len; i++){
+                if (this.childNum[v]) {
+                  for (let i = 0, len = this.childNum[v]; i < len; i++) {
                     errors[`${v}.${i}`] = validators(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
                   }
                 } else {
@@ -65,34 +68,34 @@ export default function create(options = {}) {
               })
               break
             }
-          case "object": {
-            let errors = read(this.state.errors, fields)
-            for (let v of Object.keys(fields)) {
-              if(this.childNum[v]){
-                for(let i = 0, len = this.childNum[v]; i < len; i++){
-                  errors[`${v}.${i}`] = validators(read(this.rules, `${v}`, read(this.state.values, `${v}.${i}`)))
+            case "object": {
+              let errors = read(this.state.errors, fields)
+              for (let v of Object.keys(fields)) {
+                if (this.childNum[v]) {
+                  for (let i = 0, len = this.childNum[v]; i < len; i++) {
+                    errors[`${v}.${i}`] = validators(read(this.rules, `${v}`, read(this.state.values, `${v}.${i}`)))
+                  }
+                } else {
+                  errors[`${v}`] = validators(read(this.rules, `${v}`, read(this.state.values, `${v}`)))
                 }
-              } else {
-                errors[`${v}`] = validators(read(this.rules, `${v}`, read(this.state.values, `${v}`)))
               }
+              this.setState({
+                errors: Object.assign(this.state.errors, errors)
+              }, () => {
+                let result = Object.values(errors).some(v => v)
+                if (result) {
+                  cb(errors, read(this.state.values, fields))
+                } else {
+                  cb(null, read(this.state.values, fields))
+                }
+              })
+              break
             }
-            this.setState({
-              errors: Object.assign(this.state.errors, errors)
-            }, () => {
-              let result = Object.values(errors).some(v => v)
-              if (result) {
-                cb(errors, read(this.state.values, fields))
-              } else {
-                cb(null, read(this.state.values, fields))
-              }
-            })
-            break
-          }
-          default : {
-            let errors = {}
+            default: {
+              let errors = {}
               for (let v of Object.keys(this.rules)) {
-                if(this.childNum[v]){
-                  for(let i = 0, len = this.childNum[v]; i < len; i++){
+                if (this.childNum[v]) {
+                  for (let i = 0, len = this.childNum[v]; i < len; i++) {
                     errors[`${v}.${i}`] = validators(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
                   }
                 } else {
@@ -107,7 +110,7 @@ export default function create(options = {}) {
         },
         validateField: (id, value, i) => {
           this.setState({
-            errors: wirte(this.state.errors, `${id}${i}`, validators(read(this.rules, `${id}`, []), value), true)
+            errors: wirte(this.state.errors, `${id}${i}`, validate(read(this.rules, `${id}`, []), value), true)
           })
         },
         getFieldError: (field) => {
@@ -122,9 +125,9 @@ export default function create(options = {}) {
           let errorInfo = read(this.state.errors, `${id}`)
           if (errorInfo && errorInfo.length) {
             return (
-              ErrorCom 
-              ? <ErrorCom info={message || errorInfo.reduce((x, {message}) => `${x ? x + ',' : x}${message}`, "")}/> 
-              : message || errorInfo.reduce((x, {message}) => `${x ? x + ',' : x}${message}`, "")
+              ErrorCom
+                ? <ErrorCom info={message || errorInfo.reduce((x, { message }) => `${x ? x + ',' : x}${message}`, "")} />
+                : message || errorInfo.reduce((x, { message }) => `${x ? x + ',' : x}${message}`, "")
             )
           }
         },
@@ -134,12 +137,12 @@ export default function create(options = {}) {
               values: wirte(this.state.values, fields, read(this.initialValues, fields))
             })
           } else {
-            this.setState({values: this.initialValues})
+            this.setState({ values: this.initialValues })
           }
         },
         getFieldDecorator: (id, options = {}) => {
           const {
-            rules,
+						rules,
             allow,
             message,
             errorCom,
@@ -149,69 +152,69 @@ export default function create(options = {}) {
             valueName = "value",
             trigger = "onChange",
             validateTrigger = "onChange"
-          } = options
+					} = options
           let isReuired = false
           if (initialValue && read(this.initialValues, `${id}`) !== initialValue) {
-            this.initialValue = wirte(this.initialValue, `${id}`, initialValue)
-          }
-
-          if (read(this.state.values, `${id}`) === undefined) {
-            this.state.values = wirte(this.state.values, `${id}`, read(this.initialValue, `${id}`))
+            if (Array.isArray(initialValue)) {
+              if (initialValue.length) this.initialValue = wirte(this.initialValue, `${id}`, initialValue)
+            } else {
+              this.initialValue = wirte(this.initialValue, `${id}`, initialValue)
+            }
           }
 
           if (rules || golbalRules) {
             let allRules = Array.from(new Set((golbalRules || []).concat(rules || []).filter(v => !ignoreRules.some(i => i === v))))
             this.rules[`${id}`] = allRules
-            isReuired = allRules.some((v)=>{
+            isReuired = allRules.some((v) => {
               let type = typeof v
-              switch(type){
+              switch (type) {
                 case "string":
                   return v === "require"
                 case "object":
                   return v.rule === "require"
-                default :
+                default:
                   return false
               }
             })
 
           }
           return (Coms) => {
-            if(Array.isArray(Coms)){
+            if (Array.isArray(Coms)) {
               this.childNum[`${id}`] = Coms.length
             }
             return Array.isArray(Coms)
-              ? Coms.map((Com, i)=> (
+              ? Coms.map((Com, i) => (
                 this.cloneChild(
-                  Com, 
+                  Com,
                   {
-                    id, 
-                    wrapClass, 
-                    valueName, 
-                    trigger, 
-                    validateTrigger, 
-                    allow, 
-                    message, 
-                    errorCom, 
+                    id,
+                    wrapClass,
+                    valueName,
+                    trigger,
+                    validateTrigger,
+                    allow,
+                    message,
+                    errorCom,
                     isReuired
-                  }, 
+                  },
                   `.${i}`
                 ))
               )
               : (
                 this.cloneChild(
-                  Coms, 
+                  Coms,
                   {
-                    id, 
-                    wrapClass, 
-                    valueName, 
-                    trigger, 
-                    validateTrigger, 
-                    allow, 
-                    message, 
-                    errorCom, 
+                    id,
+                    wrapClass,
+                    valueName,
+                    trigger,
+                    validateTrigger,
+                    allow,
+                    message,
+                    errorCom,
                     isReuired
                   },
-                   ""
+                  ""
                 )
               )
           }
@@ -226,50 +229,69 @@ export default function create(options = {}) {
               this.state.values = wirte(this.state.values, `${k}`, v)
             }
           }
-          if(onValuesChange) onValuesChange.call(this.ele, this.props, this.state.values)          
+          if (onValuesChange) onValuesChange.call(this.ele, this.props, this.state.values)
         })
       }
-      cloneChild = (Com, {id, wrapClass, valueName, trigger, validateTrigger, allow, message, errorCom}, i) => {
-        const {onChange, onBlur} = Com.props
-        return (
-          <div
-            className={cls(wrapClass, {
-              "validate-error": read(this.state.errors, `${id}${i}.length`)
-            })}
-          >
-            {
-              clone(Com, {
-                [valueName]: read(this.state.values, `${id}${i}`),
-                onChange: async (e = window.event, data) => {
-                  let value = read(e, "target.value", {defaultValue: e})
-                  if (trigger === "onChange") {
-                    await this.onValueChange(id, i, value, data, allow)
-                  }
-                  if (onChange) onChange(e, data)
-                  if (validateTrigger === "onChange") {
-                    this.form.validateField(id, value, i)
-                  }
-                },
-                onBlur: async (e = window.event, data) => {
-                  let value = read(e, "target.value", {defaultValue: e})
-                  if (trigger === "onBlur") {
-                    await this.onValueChange(id, i, value, data, allow)
-                  }
-                  if (onBlur) onBlur(e, data)
-                  if (validateTrigger === "onBlur") {
-                    this.form.validateField(id, value, i)
-                  }
-                }
-              })
+      cloneChild = (Com, { id, wrapClass, valueName, trigger, validateTrigger, allow, message, errorCom }, i) => {
+        const { type, props } = Com
+        if (type && props) {
+          if (typeof type === "function" || ["input", "select", "textarea"].some(v => v === type)) {
+            if (read(this.state.values, `${id}${i}`) === undefined) {
+              this.state.values = wirte(this.state.values, `${id}${i}`, read(this.initialValue, `${id}${i}`))
             }
-            <div className="error-info">
-              {this.form.getErrorInfo(`${id}${i}`, message, errorCom)}
-            </div>
-          </div>
-        )
+            const { onChange, onBlur } = props
+            return (
+              <div
+                className={cls(wrapClass, {
+                  "validate-error": read(this.state.errors, `${id}${i}.length`)
+                })}
+              >
+                {
+                  clone(Com, {
+                    [valueName]: read(this.state.values, `${id}${i}`),
+                    onChange: async (e = window.event, data) => {
+                      let value = read(e, "target.value", { defaultValue: e })
+                      if (trigger === "onChange") {
+                        await this.onValueChange(id, i, value, data, allow)
+                      }
+                      if (onChange) onChange(e, data)
+                      if (validateTrigger === "onChange") {
+                        this.form.validateField(id, value, i)
+                      }
+                    },
+                    onBlur: async (e = window.event, data) => {
+                      let value = read(e, "target.value", { defaultValue: e })
+                      if (trigger === "onBlur") {
+                        await this.onValueChange(id, i, value, data, allow)
+                      }
+                      if (onBlur) onBlur(e, data)
+                      if (validateTrigger === "onBlur") {
+                        this.form.validateField(id, value, i)
+                      }
+                    }
+                  })
+                }
+                <div className="error-info">
+                  {this.form.getErrorInfo(`${id}${i}`, message, errorCom)}
+                </div>
+              </div>
+            )
+          } else {
+            return clone(
+              Com,
+              {},
+              this.cloneNode(props.children, { id, wrapClass, valueName, trigger, validateTrigger, allow, message, errorCom }, i)
+            )
+          }
+        } else {
+          return Com
+        }
+      }
+      cloneNode = (childs, { id, wrapClass, valueName, trigger, validateTrigger, allow, message, errorCom }, i) => {
+        return map(childs, (Com) => this.cloneChild(Com, { id, wrapClass, valueName, trigger, validateTrigger, allow, message, errorCom }, i))
       }
       render() {
-        return <Com {...this.props} form={{...this.form}} {...this.mapProps} ref={(ele) => this.ele = ele}/>
+        return <Com {...this.props} form={{ ...this.form }} {...this.mapProps} ref={(ele) => this.ele = ele} />
       }
     }
   }

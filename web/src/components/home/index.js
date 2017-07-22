@@ -5,7 +5,7 @@ import trans from "libs/trans"
 import Item from "./components/item"
 import "./styles.less"
 
-import Music from "libs/components/music-player"
+// import Music from "libs/components/music-player"
 
 import {list} from "../music/actions"
 
@@ -13,8 +13,8 @@ import {menus, style, clientWidth, clientHeight} from "./const"
 import {generateIntNumber} from "libs/motheds/maths"
 
 @connect(
-  ({music})=>({
-    music: music.list
+  ()=>({
+    // music: music.list
   }),
   (dispatch)=>(
     bindActionCreators({
@@ -32,12 +32,10 @@ export default class Home extends PureComponent {
     current: 0
   }
   render() {
-    let {bg, current} = this.state,
-        {music} = this.props
+    let {bg, current} = this.state
     return (
       <div className="home" style={{backgroundImage: `url(${bg})`}}>
         <div className="home-music">
-          <Music list={music}></Music>
         </div>
         <div className="home-nav">
           {this.getItems()}

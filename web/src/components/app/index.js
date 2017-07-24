@@ -12,9 +12,6 @@ import localeData from "libs/langs"
 addLocaleData([...en, ...zh, ...my])
 
 import Home from "components/home"
-import Graphic from "components/graphic"
-import Table from "components/table"
-import Test from "components/test"
 
 @withRouter
 @connect(
@@ -29,9 +26,6 @@ export default class App extends PureComponent {
       <IntlProvider locale={locale} messages={localeData[locale]}>
         <Switch>
           <Route exact path="/" component={Home}/>
-          <Route path="/graphic" component={Graphic}/>
-          <Route path="/table" component={Table}/>
-          <Route path="/test" component={Test}/>
         </Switch>
       </IntlProvider>
     )

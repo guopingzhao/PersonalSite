@@ -2,7 +2,7 @@ const webpack = require("webpack")
 const autoprefixer = require("autoprefixer")
 const flexbugs = require('postcss-flexbugs-fixes')
 const path = require("path")
-const PORT = 80
+const PORT = 8080
 module.exports = {
   entry: {
     index: [
@@ -49,22 +49,22 @@ module.exports = {
     historyApiFallback: true,
     compress: false,
     stats: { colors: true },
-    host: "localhost",
+    host: "0.0.0.0",
     port: PORT,
-    proxy: [
-      {
-        context: ["/dics/dc-api/**", "/dics/visualization/**", "/dics/data-api/**"],
-        target: "localhost:3000",
-        secure: false
-      },
-      {
-        context: ["/socket.io/**"],
-        target: "localhost:3000",
-        secure: false,
-        bypass: function(req, res, proxyOptions){
-          console.log("socket.io代理", req, res, proxyOptions)
-        }
-      }
-    ]
+    // proxy: [
+    //   {
+    //     context: ["/dics/dc-api/**", "/dics/visualization/**", "/dics/data-api/**"],
+    //     target: "localhost:3000",
+    //     secure: false
+    //   },
+    //   {
+    //     context: ["/socket.io/**"],
+    //     target: "localhost:3000",
+    //     secure: false,
+    //     bypass: function(req, res, proxyOptions){
+    //       // console.log("socket.io代理", req, res, proxyOptions)
+    //     }
+    //   }
+    // ]
   }
 }

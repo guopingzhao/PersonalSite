@@ -5,7 +5,7 @@ import { read, wirte } from "./utils/readwirte"
 import validators from "./utils/validators"
 
 export default function create(options = {}) {
-  const { golbalRules, mapProps, onValuesChange } = options
+  const { globalRules, mapProps, onValuesChange } = options
   return (Com) => {
     return class L extends PureComponent {
       rules = {}
@@ -162,8 +162,8 @@ export default function create(options = {}) {
             }
           }
 
-          if (rules || golbalRules) {
-            let allRules = Array.from(new Set((golbalRules || []).concat(rules || []).filter(v => !ignoreRules.some(i => i === v))))
+          if (rules || globalRules) {
+            let allRules = Array.from(new Set((globalRules || []).concat(rules || []).filter(v => !ignoreRules.some(i => i === v))))
             this.rules[`${id}`] = allRules
             isReuired = allRules.some((v) => {
               let type = typeof v

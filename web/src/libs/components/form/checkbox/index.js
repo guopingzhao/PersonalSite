@@ -4,7 +4,7 @@ import cls from "classnames"
 import { CLASS_PREFIX as cp } from "../../const"
 import "./styles.less"
 
-export default class HYCheckbox extends PureComponent {
+export default class Checkbox extends PureComponent {
     state = {
         values: new Set()
     }

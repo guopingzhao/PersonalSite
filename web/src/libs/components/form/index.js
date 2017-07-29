@@ -5,7 +5,7 @@ import item from "./item"
 import ce from "./create"
 import { CLASS_PREFIX as cp } from "../const"
 
-export default class HYform extends PureComponent {
+export default class Form extends PureComponent {
   static isForm = true
   static create = ce
   render() {

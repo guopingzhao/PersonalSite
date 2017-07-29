@@ -4,7 +4,7 @@ import cls from "classnames"
 import { CLASS_PREFIX as cp } from "../../const"
 import "./styles.less"
 
-export default class HYitem extends PureComponent {
+export default class FormItem extends PureComponent {
   static isFormItem = true
   state = {
     error: null

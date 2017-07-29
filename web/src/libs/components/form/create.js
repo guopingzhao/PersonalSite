@@ -105,6 +105,7 @@ export default function create(options = {}) {
               this.setState({
                 errors
               })
+              return this.state.values
             }
           }
         },

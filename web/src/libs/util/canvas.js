@@ -1,3 +1,34 @@
+export default class Canvas {
+  constructor({canvas, width, height}){
+    this.canvas = canvas ? canvas : document.createElement("canvas")
+    if(width) this.canvas.width = width
+    if(height) this.canvas.height = height
+    this.ctx = canvas.getContent("2d")
+  }
+  clear(options){
+    const [x0=0, y0=0, x1=this.canvas.width, y1=this.canvas.height] = options
+    this.ctx.clearRect(x0, y0, x1, y1)
+  }
+  chart(paths=[], options={}){
+    chart(this.ctx, paths, options)
+  }
+  text(textOptions, options){
+    text(this.ctx, textOptions, options)
+  }
+  img(content,  options){
+    img(this.ctx, content, options)
+  }
+  arc(arcOptions, options){
+    arc(this.ctx, arcOptions, options)
+  }
+  rect(){
+
+  }
+  setStyle(options){
+    setStyle(this.ctx, options)
+  }
+}
+
 export function chart(ctx, paths = [], options = {}) {
   const {
     close,
@@ -50,17 +81,19 @@ export function text(ctx, textOptions = {}, options = {}) {
   ctx.save()
 }
 
-export function img(ctx, options = {}) {
+export function img(ctx, imgOptions={}, options = {}) {
   const {
     x, y,
     content
-  } = options
+  } = imgOptions
+  ctx.save()
+  setStyle(ctx, options)
   if (typeof content === "string") {
     let img = document.createElement("img")
     img.src = content
     img.onload = function () {
       ctx.drawImage(img, x, y)
-      ctx.save()
+      ctx.res()
     }
   } else {
     content.onload = function () {

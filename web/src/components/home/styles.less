@@ -1,31 +1,22 @@
 
 .home{
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% auto;
   position: relative;
   transition: all .6s cubic-bezier(0.075, 0.82, 0.165, 1);
-  &-music{
-    z-index: 10;
-    position: absolute;
-    top: 10px;
-    left: 0;
-  }
   &-nav{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
   &-item{
-    flex: 1 0 auto;
+    float: left;
     margin: .5px;
-    height: var(--home-item-height);
-    width: var(--home-item-width);
-    min-width: .9rem;
-
-    &-name{
-      color: #fff;
-    }
-    &>div{
-      border-radius: 5px;   
+    flex-flow: 1;
+    &:hover{
     }
   }
 

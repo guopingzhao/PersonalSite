@@ -4,7 +4,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HMRContainer } from "react-hot-loader"
 import { Provider } from "react-redux"
-import { BrowserRouter } from "react-router-dom"
+import { HashRouter } from "react-router-dom"
 import store from "store"
 import quickClick from "quickclick"
 import App from "components/app"
@@ -15,9 +15,9 @@ function render(Comp) {
   ReactDOM.render(
     <HMRContainer>
       <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
           <Comp/>
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     </HMRContainer>,
     document.getElementById("root"),

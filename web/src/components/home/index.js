@@ -7,18 +7,15 @@ import "./styles.less"
 
 // import Music from "libs/components/music-player"
 
-import {list} from "../music/actions"
 
-import {menus, style, clientWidth, clientHeight} from "./const"
+import {menus, clientWidth, clientHeight} from "./const"
 import {generateIntNumber} from "libs/motheds/maths"
 
 @connect(
   ()=>({
-    // music: music.list
   }),
   (dispatch)=>(
     bindActionCreators({
-      getmusic: list
     },dispatch)
   )
 )
@@ -27,18 +24,16 @@ export default class Home extends PureComponent {
     bg: this.getBgImg(),
     clientWidth,
     clientHeight,
-    positions: [],
-    orders: [],
-    current: 0
+    items: []
   }
   render() {
-    let {bg, current} = this.state
+    let {bg, current, items} = this.state
     return (
       <div className="home" style={{backgroundImage: `url(${bg})`}}>
         <div className="home-music">
         </div>
         <div className="home-nav">
-          {this.getItems()}
+          {items}
         </div>
         <div className="home-control">
           <div className="home-control-random" onClick={this.upsetMenus}/>
@@ -48,73 +43,46 @@ export default class Home extends PureComponent {
       </div>    
     )
   }
-  setrow = ()=>{
-    let {clientWidth} = this.state,
-        Wnum = Math.ceil(clientWidth / 100),
-        positions = [],
-        orders = [],
-        order = 0,
-        {length} = menus
-    while(positions.length < length){
-      positions.push(++Wnum)
-    }
-    while(orders.length < length){
-      orders.push(order++)
-    }
-    this.setState({
-      positions, 
-      orders
-    })
-  }
-  getItems(){
-    let {positions, orders, clientHeight, clientWidth} = this.state,
-        Wnum = Math.ceil(clientWidth / 100),
-        Hnum = Math.ceil(clientHeight / 100),
-        items = [],
-        order = 0
-
-    for (let i = 0, len = Wnum * Hnum; i < len; i++){
-      if(positions.some((v) => v === i)){
-        let index = orders[order++]
-        items.push(<Item cs={`home-item item-${i}`} key={i} {...menus[index]} ismenu={true}/>)
+  renderItems(positions){
+    let {width, height, rowNum, colNum} = this.calculate(),
+      itemNum = rowNum * colNum,
+      position = positions || this.getPosition(itemNum),
+      order = 0,
+      items = []
+    for(let i = 0; i < itemNum; i++){
+      if(position.some(v => v === i)){
+        let {path, name, index} = menus[order++]
+        items.push(<Item key={i}  cs="home-item" width={width} height={height} path={path} name={name} index={index} ismenu/>)
       } else {
-        items.push(<Item cs={`home-item item-${i}`} key={i}/>)
+        items.push(<Item key={i}  cs="home-item" width={width} height={height}/>)  
       }
-      
     }
-    return items
-  }
-  upsetMenus = ()=>{
-    let {clientWidth, clientHeight} = this.state,
-        Wnum = Math.ceil(clientWidth / 100),
-        Hnum = Math.ceil(clientHeight / 100),
-        num = Wnum * Hnum,
-        positions = new Set(),
-        orders = new Set(),
-        {length} = menus
-    style.setProperty("--home-item-width", `${(clientWidth - Wnum)/ Wnum}px`)
-    style.setProperty("--home-item-height", `${(clientHeight - Hnum)/ Hnum}px`)
-    while(positions.size < length){
-      positions.add(generateIntNumber(num-1))
-    }
-    while(orders.size < length){
-      orders.add(generateIntNumber(length-1))
-    }
-    positions = Array.from(positions)
-    orders = Array.from(orders)
     this.setState({
-      positions, 
-      orders
+      items
     })
   }
-  comUpdate = async ()=>{
-    const {clientWidth, clientHeight} = document.documentElement
-    await this.setState({
-      clientWidth, 
-      clientHeight
-    })
-    this.upsetMenus()
-    this.updateBg()
+  calculate = () => {
+    const {clientHeight, clientWidth} = this.state
+    let rowNum =  Math.floor(clientHeight / 90),
+      colNum =  Math.floor(clientWidth / 90),
+      height = (clientHeight - rowNum) / rowNum,
+      width= (clientWidth - colNum) / colNum
+
+    return {
+      height,
+      width,
+      rowNum,
+      colNum
+    }
+  }
+  getPosition = (num) => {
+    let positions = new Set()
+
+    while(positions.size < menus.length){
+      positions.add(generateIntNumber(num))
+    }
+
+    return Array.from(positions)
   }
   updateBg = ()=>{
     this.setState({
@@ -125,10 +93,25 @@ export default class Home extends PureComponent {
     let i = generateIntNumber(num)
     return require(`images/homebg${i}.jpg`)
   }
+  upsetMenus = () => {
+    this.renderItems()
+  }
+  setrow = () => {
+    let positions = menus.map(v => v.index).sort()
+    this.renderItems(positions)
+  }
+  comUpdate = () => {
+    const {clientWidth, clientHeight} = document.documentElement
+    this.setState({
+      clientWidth,
+      clientHeight
+    },()=>{
+      this.renderItems()
+    })
+  }
   componentWillMount(){
     window.addEventListener("resize",this.comUpdate)
-    this.upsetMenus()    
-    this.props.getmusic()
+    this.renderItems()
   }
   componentWillUnmount(){
     window.removeEventListener("resize",this.comUpdate)

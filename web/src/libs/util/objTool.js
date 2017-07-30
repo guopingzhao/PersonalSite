@@ -150,5 +150,5 @@ function getAllPath(obj, key, parentKey = "") {
   if (!isfor) {
     keyPath.push(`${parentKey}`.replace(/\.$/, ""))
   }
-  return keyPath.join().split(",")
+  return keyPath.join().split(",").filter(v => v)
 }

@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+var cute = require("../lib/cute")
+var router = cute.router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/test', function(req, res, next) {
+  console.log(1111111111)
 });
 
-module.exports = router;
+module.exports = router

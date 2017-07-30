@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve("build"),
     filename: "js/[name].[chunkhash:8].js",
-    chunkFilename: "js/[id].[chunkhash:8].js",
+    chunkFilename: "js/[name]-[id].[chunkhash:8].js", 
   },
 
   module: {
@@ -62,7 +62,9 @@ module.exports = {
         drop_console: true
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({   //在多个路由模块中使用的只引用一次
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "app",
+      children: true,
       async: "common-in-lazy",
       minChunks: ({ resource } = {}) => (
         resource &&
@@ -70,11 +72,13 @@ module.exports = {
         /axios/.test(resource)
       )
     }),
-    new webpack.optimize.CommonsChunkPlugin({   //引用两次以上的模块加入used-twice中
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "app",
+      children: true,
       async: "used-twice",
       minChunks: (module, count) => (count > 1)
     }),
-    new webpack.optimize.CommonsChunkPlugin({   //自动化分离第三方依赖
+    new webpack.optimize.CommonsChunkPlugin({
       name: "vender",
       filename: "js/common.[chunkhash:8].js",
       minChunks: ({ resource }) => (

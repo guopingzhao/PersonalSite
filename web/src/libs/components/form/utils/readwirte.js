@@ -81,7 +81,7 @@ function readObj(obj = {}, pathStr, defaultValue, isTrue) {
   if (isTrue) {
     return value || defaultValue
   }
-  return isKey ? value : defaultValue
+  return !value && !isKey ? defaultValue : value
 }
 
 function wirteObj(newObj, pathStr, value, reduce) {

@@ -43,72 +43,82 @@ export default function create(options = {}) {
           })
         },
         validateFields: (fields, cb) => {
-          let type = typeof fields
-          switch (type) {
-            case "function": {
-              let errors = {}
-              for (let v of Object.keys(this.rules)) {
-                if (this.childNum[v]) {
-                  for (let i = 0, len = this.childNum[v]; i < len; i++) {
-                    errors[`${v}.${i}`] = validators(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
-                  }
-                } else {
-                  errors[`${v}`] = validators(read(this.rules, `${v}`), read(this.state.values, `${v}`))
-                }
-              }
-              this.setState({
-                errors
-              }, () => {
-                let result = Object.values(errors).some(v => v)
-                if (result) {
-                  fields(errors, this.state.values)
-                } else {
-                  fields(null, this.state.values)
-                }
-              })
-              break
-            }
-            case "object": {
-              let errors = read(this.state.errors, fields)
-              for (let v of Object.keys(fields)) {
-                if (this.childNum[v]) {
-                  for (let i = 0, len = this.childNum[v]; i < len; i++) {
-                    errors[`${v}.${i}`] = validators(read(this.rules, `${v}`, read(this.state.values, `${v}.${i}`)))
-                  }
-                } else {
-                  errors[`${v}`] = validators(read(this.rules, `${v}`, read(this.state.values, `${v}`)))
-                }
-              }
-              this.setState({
-                errors: Object.assign(this.state.errors, errors)
-              }, () => {
-                let result = Object.values(errors).some(v => v)
-                if (result) {
-                  cb(errors, read(this.state.values, fields))
-                } else {
-                  cb(null, read(this.state.values, fields))
-                }
-              })
-              break
-            }
-            default: {
-              let errors = {}
-              for (let v of Object.keys(this.rules)) {
-                if (this.childNum[v]) {
-                  for (let i = 0, len = this.childNum[v]; i < len; i++) {
-                    errors[`${v}.${i}`] = validators(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
-                  }
-                } else {
-                  errors[`${v}`] = validators(read(this.rules, `${v}`), read(this.state.values, `${v}`))
-                }
-              }
-              this.setState({
-                errors
-              })
-              return this.state.values
-            }
-          }
-        },
+					return new Promise((res) => {
+						let type = typeof fields
+						switch (type) {
+							case "function": {
+								let errors = {}
+								for (let v of Object.keys(this.rules)) {
+									if (this.childNum[v]) {
+										for (let i = 0, len = this.childNum[v]; i < len; i++) {
+											errors[`${v}.${i}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
+										}
+									} else {
+										errors[`${v}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}`))
+									}
+								}
+								this.setState({
+									errors
+								}, () => {
+									let result = Object.values(errors).some(v => v)
+									if (result) {
+										fields(errors, this.state.values)
+									} else {
+										fields(null, this.state.values)
+									}
+									
+								})
+								break
+							}
+							case "object": {
+								let errors = read(this.state.errors, fields)
+								for (let v of Object.keys(fields)) {
+									if (this.childNum[v]) {
+										for (let i = 0, len = this.childNum[v]; i < len; i++) {
+											errors[`${v}.${i}`] = validates(read(this.rules, `${v}`, read(this.state.values, `${v}.${i}`)))
+										}
+									} else {
+										errors[`${v}`] = validates(read(this.rules, `${v}`, read(this.state.values, `${v}`)))
+									}
+								}
+								this.setState({
+									errors: Object.assign(this.state.errors, errors)
+								}, () => {
+									let result = Object.values(errors).some(v => v),
+										fieldValues = read(this.state.values, fields)
+									if (result) {
+										cb(errors, fieldValues)
+									} else {
+										cb(null, fieldValues)
+									}
+								})
+								break
+							}
+							default: {
+								let errors = {}
+								for (let v of Object.keys(this.rules)) {
+									if (this.childNum[v]) {
+										for (let i = 0, len = this.childNum[v]; i < len; i++) {
+											errors[`${v}.${i}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
+										}
+									} else {
+										errors[`${v}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}`))
+									}
+								}
+								this.setState({
+									errors
+								},()=>{
+									let result = Object.values(errors).some(v => v)
+									if (result) {
+										res({err: errors, values: this.state.values})
+									} else {
+										res({err: null, values: this.state.values})
+									}
+								})
+							}
+						}
+					})
+				},
         validateField: (id, value, i) => {
           this.setState({
             errors: wirte(this.state.errors, `${id}${i}`, validate(read(this.rules, `${id}`, []), value), true)
@@ -269,7 +279,8 @@ export default function create(options = {}) {
                       if (validateTrigger === "onBlur") {
                         this.form.validateField(id, value, i)
                       }
-                    }
+                    },
+                    className: cls("validate-error-child", props.className)
                   })
                 }
                 <div className="error-info">

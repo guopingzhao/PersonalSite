@@ -112,7 +112,7 @@ export default class Page extends PureComponent {
             const { pageSize } = this.state,
                 { total, onChange } = this.props
             if (+total >= +target.value && onChange) {
-                onChange(target.value, pageSize)
+                onChange(+target.value, pageSize)
             }
         }
     }

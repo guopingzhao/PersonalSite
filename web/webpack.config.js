@@ -43,8 +43,7 @@ module.exports = env => {
       new HtmlWebpackPlugin({
         filename: "index.html",
         template: "src/index.html",
-        inject: true,
-        chunks: ["vender", "used-twice", "index"],
+        inject: true
       })
     ]
   }

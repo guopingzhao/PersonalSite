@@ -5,10 +5,11 @@
   "author": "zhaoguoping",
   "license": "ISC",
   "scripts": {
-    "clean": "rm -r build/*",
-    "dev": "webpack-dev-server --open",
     "lint": "prettier --trailing-comma all --no-semi --write \"src/**/*.js\" && eslint_d --fix src",
-    "prod": "npm run clean & webpack -p --env.prod",
+    "clean": "rm -rf build || del /S build\\*",
+    "dev": "webpack-dev-server --open",
+    "prod": "npm run clean | webpack -p --display-optimization-bailout --env.prod=prod",
+    "test": "rm -rf test & del /S test\\* & webpack -p --display-optimization-bailout --env.prod=test",
     "start": "npm run dev"
   },
   "lint-staged": {

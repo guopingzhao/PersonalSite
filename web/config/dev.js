@@ -2,7 +2,7 @@ const webpack = require("webpack")
 const autoprefixer = require("autoprefixer")
 const flexbugs = require('postcss-flexbugs-fixes')
 const path = require("path")
-const PORT = 8080
+const PORT = 8000
 module.exports = {
   entry: {
     index: [

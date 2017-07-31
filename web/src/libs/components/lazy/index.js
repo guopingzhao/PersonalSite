@@ -1,7 +1,7 @@
-import React from "react"
+import React, {PureComponent} from "react"
 import * as lazyModules from "libs/lazy-modules"
 
-export default class Lazy extends React.Component {
+export default class Lazy extends PureComponent {
   state = {
     modules: {},
   }

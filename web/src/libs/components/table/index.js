@@ -129,7 +129,7 @@ export default class Table extends PureComponent {
                 <tr
                     className={`${cp}-table-tbody-tr`}
                     key={i}
-                    onContextMenu={(e = window.event) => { this.onContextMenu(e, v) }}
+                    onContextMenu={(e = window.event) => {this.onContextMenu(e, v)}}
                     {...click}
                 >
                     {this.createRow(v, i)}
@@ -171,22 +171,21 @@ export default class Table extends PureComponent {
                     className={cls(`${cp}-table-td`, {focus: `${i},${j}` === this.state.focus})}
                     key={key || dataIndex || j}
                     onDoubleClick={() => this.doubleClickTD(i, j)}
-                    onClick={()=>this.onTdFocus(`${i},${j}`)}
+                    onClick={() => this.onTdFocus(`${i},${j}`)}
                 >
                     {
                         this.state.editTd === `${i},${j}`
                             ? (
-                            <input
-                                autoFocus
-                                className={`${cp}-table-td-input`}
-                                defaultValue={`${data[dataIndex] || data[j]}`}
-                                onBlur={(e) => this.tdInputBlur(e, data)}
-
-                            />
+                                <input
+                                    autoFocus
+                                    className={`${cp}-table-td-input`}
+                                    defaultValue={`${data[dataIndex] || data[j]}`}
+                                    onBlur={(e) => this.tdInputBlur(e, data)}
+                                />
                         )
 
                             :
-                            <span className={`${cp}-table-td-span`}>{render ? render.call(this, data) : `${data[dataIndex] || data[j]}`}</span>
+                                <span className={`${cp}-table-td-span`}>{render ? render.call(this, data) : `${data[dataIndex] || data[j]}`}</span>
                     }
                 </td>
             )
@@ -281,26 +280,26 @@ export default class Table extends PureComponent {
     }
     onTdFocus = (xy) => {
         const {isEdit} = this.props
-        if(isEdit){
+        if (isEdit) {
             this.setState({
                 focus: xy
             })
         }
     }
-    doubleClickTD = (x, y) =>{
-        if(this.state.focus === `${x},${y}`){
+    doubleClickTD = (x, y) => {
+        if (this.state.focus === `${x},${y}`) {
             this.setState({
                 editTd: `${x},${y}`
             })
         }
 
     }
-    tdInputBlur =({target: {value}}, data) =>{
+    tdInputBlur =({target: {value}}, data) => {
         const {onTdblur} = this.props
         this.setState({
             editTd: ""
         })
-        if(onTdblur) onTdblur(value, data)
+        if (onTdblur) onTdblur(value, data)
     }
     componentDidMount() {
         this.setState({

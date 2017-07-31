@@ -16,7 +16,7 @@ export default class RightMenu extends PureComponent {
             return (
                 <div
                     key={i}
-                    onClick={(e = window.event) => { v.click(info, e) }}
+                    onClick={(e = window.event) => {v.click(info, e)}}
                     className={`${cp}-menu-item`}
                 >
                     <span className={`icon icon-${v.icon}`} />

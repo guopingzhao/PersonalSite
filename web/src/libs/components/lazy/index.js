@@ -1,43 +1,42 @@
-import React, {PureComponent} from "react"
-import * as lazyModules from "libs/lazy-modules"
+import React, { PureComponent } from "react"
 
 export default class Lazy extends PureComponent {
-  state = {
-    modules: {},
-  }
-
-  render() {
-    if (Object.keys(this.state.modules).length > 0) {
-      return React.Children.only(this.props.children(this.state.modules))
-    } else {
-      return null
+    state = {
+        module: null
     }
-  }
 
-  componentDidMount() {
-    this._mounted = true
-    this.loadModules()
-  }
-
-  componentWillUnmount() {
-    this._mounted = undefined
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { modules } = this.props
-    const { modules: prevModules } = prevProps
-    const modulesDiffer = Object.keys(modules).some(
-      k => modules[k] !== prevModules[k],
-    )
-    if (modulesDiffer) this.loadModules()
-  }
-
-  async loadModules() {
-    try {
-      const modules = await lazyModules.load(this.props.modules)
-      this.setState({ modules })
-    } catch (e) {
-      // ignore, pass empty modules
+    render() {
+        const { module } = this.state
+        if (!module) return null
+        return this.props.children(module)
     }
-  }
+
+    componentWillMount() {
+        this.load(this.props.load)
+    }
+    componentWillReceiveProps({ load }) {
+        if (this.props.load !== load) {
+            this.load(load)
+        }
+    }
+
+    load = async (load) => {
+        this.state.module = null
+        let type = typeof load
+        let module = null
+        switch (type) {
+        case "function":
+            module = await load()
+            break
+        case "string":
+            module = await require("components/chat-room").default
+            break
+        case "object":
+            module = await load
+            break
+        }
+        this.setState({
+            module: module.default ? module.default : module
+        })
+    }
 }

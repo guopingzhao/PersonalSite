@@ -8,7 +8,7 @@
     "clean": "rm -rf build || del /S build\\*",
     "cleanTest": "rm -rf test || del /S test\\*",
     "dev": "webpack-dev-server --open",
-    "lint": "prettier --trailing-comma all --no-semi --write \"src/**/*.js\" && eslint_d --fix src",
+    "lint": "eslint_d --fix src",
     "prod": "npm run clean | webpack -p --display-optimization-bailout --env.prod=prod",
     "test": "npm run cleanTest | webpack --display-optimization-bailout --env.prod=test",
     "start": "npm run dev"

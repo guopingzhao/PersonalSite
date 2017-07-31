@@ -40,10 +40,10 @@ export default class Page extends PureComponent {
             )
             : null
         switch (type) {
-            case "a":   //待定
-                return []
-            default:
-                return [
+        case "a":   //待定
+            return []
+        default:
+            return [
                     totalElements,
                     totalNode,
                     showSizeChange ? this.createPageSizeChange() : null,
@@ -53,7 +53,7 @@ export default class Page extends PureComponent {
                     lastPage,
                     this.createNextButton(),
                     showJump ? this.createJump() : null
-                ]
+            ]
         }
 
     }
@@ -204,7 +204,7 @@ export default class Page extends PureComponent {
             <div
                 className={cls("page-item", { on: current === i })}
                 key={i}
-                onClick={() => { this.pageChange(i) }}
+                onClick={() => {this.pageChange(i)}}
             >
                 {
                     pageFormat
@@ -230,7 +230,7 @@ export default class Page extends PureComponent {
             >
                 <span
                     className="page-item-prev"
-                    onClick={() => { if (current > 1) this.pageChange(current - 1) }}
+                    onClick={() => {if (current > 1) this.pageChange(current - 1)}}
                 />
             </div>
         )
@@ -245,7 +245,7 @@ export default class Page extends PureComponent {
             >
                 <span
                     className="page-item-next"
-                    onClick={() => { if (current < total) this.pageChange(current + 1) }}
+                    onClick={() => {if (current < total) this.pageChange(current + 1)}}
                 />
             </div>
         )
@@ -330,7 +330,7 @@ export default class Page extends PureComponent {
         elements: PropTypes.oneOfType([       //一共多少条
             PropTypes.number,
             PropTypes.string
-        ]),                                     
+        ]),
         elementsFormat: PropTypes.string,     //格式化总条数显示格式
         sizeAry: PropTypes.array,             //支持哪些pageSize
         selectSizeFormat: PropTypes.string,   //pageSize选项显示格式

@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import cls from "classnames"
 import { CLASS_PREFIX as cp } from "../../const"
 import "./styles.less"
-export default class HYinput extends PureComponent {
+export default class Input extends PureComponent {
     state = {
         on: false
     }

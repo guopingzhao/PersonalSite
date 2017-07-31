@@ -1,6 +1,11 @@
-*/node_modules/
-*/build/
-*/.vscode/
-*/npm-debug.log
-.idea/
-.DS_Store
+**/node_modules/
+**/build/
+**/test/
+**/.vscode/
+**/debug.log
+**/npm-debug.log
+**/npm-error.log
+**/yarn-debug.log
+**/yarn-error.log
+**/.idea/
+**/.DS_Store

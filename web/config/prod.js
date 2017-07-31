@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve("build"),
     filename: "js/[name].[chunkhash:8].js",
-    chunkFilename: "js/[id].[chunkhash:8].js",
+    chunkFilename: "js/[name]-[id].[chunkhash:8].js", 
   },
 
   module: {
@@ -64,6 +64,7 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "app",
+      children: true,
       async: "common-in-lazy",
       minChunks: ({ resource } = {}) => (
         resource &&
@@ -73,6 +74,7 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "app",
+      children: true,
       async: "used-twice",
       minChunks: (module, count) => (count > 1)
     }),

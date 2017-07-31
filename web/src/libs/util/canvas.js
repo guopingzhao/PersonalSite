@@ -1,9 +1,41 @@
+export default class Canvas {
+  constructor({canvas, width, height}){
+    this.canvas = canvas ? canvas : document.createElement("canvas")
+    if(width) this.canvas.width = width
+    if(height) this.canvas.height = height
+    this.ctx = canvas.getContent("2d")
+  }
+  clear(options){
+    const [x0=0, y0=0, x1=this.canvas.width, y1=this.canvas.height] = options
+    this.ctx.clearRect(x0, y0, x1, y1)
+  }
+  chart(paths=[], options={}){
+    chart(this.ctx, paths, options)
+  }
+  text(textOptions, options){
+    text(this.ctx, textOptions, options)
+  }
+  img(content,  options){
+    img(this.ctx, content, options)
+  }
+  arc(arcOptions, options){
+    arc(this.ctx, arcOptions, options)
+  }
+  rect(spot, options){
+    rect(this.ctx, spot, options)
+  }
+  setStyle(options){
+    setStyle(this.ctx, options)
+  }
+}
+
 export function chart(ctx, paths = [], options = {}) {
   const {
     close,
     type = "stroke"
   } = options
   let pt = [...paths]
+  ctx.save()  
   setStyle(ctx, options)
   ctx.beginPath()
   ctx.moveTo(...pt.shift())
@@ -23,7 +55,7 @@ export function chart(ctx, paths = [], options = {}) {
     ctx.closePath()
   }
   ctx[type]()
-  ctx.save()
+  ctx.restore()
 }
 
 export function text(ctx, textOptions = {}, options = {}) {
@@ -39,7 +71,7 @@ export function text(ctx, textOptions = {}, options = {}) {
   const {
     type = "fill"
   } = options
-
+  ctx.save()
   if (font) ctx.font = font
   if (textAlign) ctx.textAlign = textAlign
   if (textBaseline) ctx.textBaseline = textBaseline
@@ -47,30 +79,30 @@ export function text(ctx, textOptions = {}, options = {}) {
   setStyle(ctx, options, "fill")
 
   ctx[`${type}Text`](text, x, y, maxWidth)
-  ctx.save()
+  ctx.restore()
 }
 
-export function img(ctx, options = {}) {
+export function img(ctx, imgOptions = {}, options={}) {
   const {
     x, y,
     content
-  } = options
+  } = imgOptions
+  ctx.save()
+  setStyle(ctx, options)
   if (typeof content === "string") {
     let img = document.createElement("img")
     img.src = content
     img.onload = function () {
       ctx.drawImage(img, x, y)
-      ctx.save()
+      ctx.restore()
     }
   } else {
-    content.onload = function () {
-      ctx.drawImage(content, x, y)
-      ctx.save()
-    }
+    ctx.drawImage(content, x, y)
+    ctx.restore()
   }
 }
 
-export function arc(ctx, arcOptions, options) {
+export function arc(ctx, arcOptions, options={}) {
   const {
     center,
     radius,
@@ -79,17 +111,31 @@ export function arc(ctx, arcOptions, options) {
     {
     type = "stroke"
   } = options
-
+  ctx.save()
   setStyle(ctx, options)
 
   ctx.beginPath()
   ctx.arc(...center, radius, ...radian)
   ctx[type]()
-  ctx.save()
+  ctx.restore()
 }
 
-export function setStyle(ctx, options, defaultType) {
+export function rect(ctx, spot, options={}){
   const {
+    type = "stroke"
+  } = options
+  ctx.save()
+  setStyle(ctx, options)
+  ctx.rect(...spot)
+  ctx[type]()
+  ctx.restore()
+}
+
+export function setStyle(ctx, options={}, defaultType) {
+  const {
+    scale,
+    origin,
+    rotate,
     repeat,
     shadow,
     gradient,
@@ -105,6 +151,11 @@ export function setStyle(ctx, options, defaultType) {
   if (lineJoin) ctx.lineJoin = lineJoin
   if (lineWidth) ctx.lineWidth = lineWidth
   if (miterLimit) ctx.miterLimit = miterLimit
+
+  if(scale) ctx.scale(...scale)
+  if(origin) ctx.translate(...origin)
+  if(rotate) ctx.rotate(rotate)
+
   if (gradient) {
     const {
       type:gradientType = "linear",
@@ -145,6 +196,7 @@ export function setStyle(ctx, options, defaultType) {
       offsetY = 0,
       color = "#000"
     } = shadow
+  
     ctx.shadowBlur = blur
     ctx.shadowOffsetX = offsetX
     ctx.shadowOffsetY = offsetY

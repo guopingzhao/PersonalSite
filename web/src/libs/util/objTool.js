@@ -35,18 +35,18 @@ export function wirte(obj = {}, pathStr = "", value, reduce) {
 	}
 }
 
-export function del(obj = {}, pathStr = "") {
+export function del(obj = {}, pathStr = "", options = {}) {
 	let newObj = Object.assign(Array.isArray(obj) ? [] : {}, obj)
 	if (Array.isArray(pathStr)) {
 		let paths = pathStr.map(v => v.split(".")),
 			v = newObj
 		for (let i = 0, len = paths.length; i < len; i++) {
-			v = delOne(v, paths[i])
+			v = delOne(v, paths[i], options)
 		}
 		return v
 	} else {
 		let pathline = `${pathStr}`.split(".")
-		return delOne(newObj, pathline)
+		return delOne(newObj, pathline, options)
 	}
 }
 
@@ -106,8 +106,12 @@ function wirteObj(newObj, pathStr, value, reduce) {
 	return newObj
 }
 
-function delOne(obj, pathAry) {
+function delOne(obj, pathAry, options) {
 	let newObj = Object.assign(Array.isArray(obj) ? [] : {}, obj),
+		{ 
+			isFill = false,
+			fillValue
+		} = options,
 		v = newObj,
 		len = pathAry.length - 1
 	for (let i = 0; i < len; i++) {
@@ -120,10 +124,21 @@ function delOne(obj, pathAry) {
 		}
 	}
 	if (Array.isArray(v)) {
-		if (v[pathAry[len]])
-			v.splice(pathAry[len], 1, undefined)
+		if (v[pathAry[len]]) {
+			if (isFill) {
+				v.splice(pathAry[len], 1, fillValue)
+
+			} else {
+				v.splice(pathAry[len], 1)
+			}
+		}
 	} else {
+		if(isFill){
 		delete v[pathAry[len]]
+			
+		} else {
+			v[pathAry[len]] = fillValue
+		}
 	}
 	return newObj
 }
@@ -145,10 +160,11 @@ function getAllPath(obj, key, parentKey = "") {
 			}
 		}
 		if (childKey) keyPath.push(childKey)
-
 	}
+
 	if (!isfor) {
 		keyPath.push(`${parentKey}`.replace(/\.$/, ""))
 	}
+
 	return keyPath.join().split(",").filter(v => v)
 }

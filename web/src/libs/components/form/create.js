@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react"
 const { cloneElement: clone } = React
 import cls from "classnames"
-import { read, wirte } from "./utils/readwirte"
+import { read, wirte } from "../../util/objTool"
 import validators from "./utils/validators"
 
 export default function create(options = {}) {

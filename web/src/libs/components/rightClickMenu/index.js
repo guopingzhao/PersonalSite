@@ -4,7 +4,7 @@ import cls from "classnames"
 import { CLASS_PREFIX as cp } from "../const"
 import "./styles.less"
 
-export default class Menu extends PureComponent {
+export default class RightMenu extends PureComponent {
     state = {
         visible: false,
         x: 0,

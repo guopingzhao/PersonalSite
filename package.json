@@ -14,11 +14,11 @@
     "lint-staged": "^4.0.2"
   },
   "scripts": {
-    "precommit": "lint-staged"
+    "precommit": "node -e 'console.log(\"上传远程服务器\")'"
   },
   "lint-staged": {
     "**/*.js": [
-      "eslint_d --fix **/",
+      "eslint_d --fix /",
       "git add"
     ]
   },

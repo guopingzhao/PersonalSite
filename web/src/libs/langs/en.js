@@ -1,4 +1,4 @@
 export default {
-    MyBlog: "my blog",
-    ChatRoom: "chat room"
+  MyBlog: "my blog",
+  ChatRoom: "chat room"
 }

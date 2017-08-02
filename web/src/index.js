@@ -12,14 +12,14 @@ import App from "components/app"
 quickClick(document.body)
 
 function render(Comp) {
-    ReactDOM.render(
-        <HMRContainer>
-            <Provider store={store}>
-                <HashRouter>
-                    <Comp />
-                </HashRouter>
-            </Provider>
-        </HMRContainer>,
+  ReactDOM.render(
+    <HMRContainer>
+      <Provider store={store}>
+        <HashRouter>
+          <Comp />
+        </HashRouter>
+      </Provider>
+    </HMRContainer>,
     document.getElementById("root"),
   )
 }
@@ -27,5 +27,5 @@ function render(Comp) {
 render(App)
 
 if (module.hot) {
-    module.hot.accept("components/app", () => render(App))
+  module.hot.accept("components/app", () => render(App))
 }

@@ -6,8 +6,8 @@ import app from "components/app/reducers"
 
 const store = createStore(
   combineReducers({
-      routerReducer,
-      app
+    routerReducer,
+    app
   }),
   compose(
     applyMiddleware(thunkMiddleware),

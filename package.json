@@ -1,0 +1,33 @@
+{
+  "name": "bolg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint_d": "^5.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.2"
+  },
+  "scripts": {
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint_d --fix '**/*.js'",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guopingzhao/PersonalSite.git"
+  },
+  "author": "赵国平",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guopingzhao/PersonalSite/issues"
+  },
+  "homepage": "https://github.com/guopingzhao/PersonalSite#readme"
+}

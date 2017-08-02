@@ -9,12 +9,14 @@
   "parser": "babel-eslint",
   "plugins": [
     "babel",
-    "react"
+    "react",
+    "prettier"
   ],
   "installedESLint": true,
   "extends": [
     "eslint:recommended",
-    "plugin:react/all"
+    "plugin:react/all",
+    "prettier"
   ],
   "env": {
     "es6": true,
@@ -50,6 +52,13 @@
     "no-use-before-define": [
       2,
       "nofunc"
+    ],
+    "no-extra-parens": [
+      2,
+      "all",
+      {
+        "ignoreJSX": "multi-line"
+      }
     ],
     "no-var": 2,
     "prefer-arrow-callback": 2,
@@ -89,9 +98,9 @@
     ],
     "indent": [
       2,
-      4,
+      2,
       {
-        "MemberExpression": 0,
+        "MemberExpression": 1,
         "ArrayExpression": "first",
         "FunctionDeclaration": {
           "body": 1
@@ -100,7 +109,10 @@
     ],
     "key-spacing": 2,
     "keyword-spacing": 2,
-    "linebreak-style": 1,
+    "linebreak-style": [
+      2,
+      "unix"
+    ],
     "new-cap": 2,
     "new-parens": 2,
     "no-array-constructor": 2,
@@ -113,16 +125,20 @@
       "double"
     ],
     "semi-spacing": 2,
-    "semi": [
-      2,
-      "never"
-    ],
     "space-before-blocks": 2,
     "space-in-parens": [
       2,
       "never"
     ],
     "space-unary-ops": 2,
+    "react/jsx-indent": [
+      2,
+      2
+    ],
+    "react/jsx-indent-props": [
+      2,
+      2
+    ],
     "react/jsx-filename-extension": 0,
     "react/jsx-sort-props": 0,
     "react/no-array-index-key": 0,
@@ -133,7 +149,7 @@
     "react/sort-comp": 0,
     "react/no-set-state": 0,
     "react/require-default-props": 0,
-    "react/forbid-prop-types":  0,
+    "react/forbid-prop-types": 0,
     "react/sort-prop-types": 0,
     "react/prefer-stateless-function": 0,
     "react/no-direct-mutation-state": 0,

@@ -19,7 +19,7 @@ export function read(obj = {}, pathStr = "", options = {}) {
 
 export function write(obj = {}, pathStr = "", value, options = {}) {
   const { reduce } = options
-  let newObj = obj
+  let newObj = obj      
   if (Array.isArray(pathStr)) {
     for (let v of pathStr) {
       newObj = writeObj(newObj, `${v}`, read(value, `${v}`), reduce)
@@ -88,8 +88,8 @@ function writeObj(obj, pathStr, value, reduce) {
 			,
 			obj
 		)
-  if (obj[pathStr] || reduce) {
-    obj[pathStr] = value
+  if (newObj[pathStr] || reduce) {
+    newObj[pathStr] = value
     return newObj
   }
 

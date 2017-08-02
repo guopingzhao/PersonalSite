@@ -29,7 +29,7 @@ export default class Lazy extends PureComponent {
             module = await load()
             break
         case "string":
-            module = await require("components/chat-room").default
+            module = (await import(`../../../${load}`)).default
             break
         case "object":
             module = await load

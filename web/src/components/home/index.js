@@ -5,9 +5,6 @@ import trans from "libs/trans"
 import Item from "./components/item"
 import "./styles.less"
 
-// import Music from "libs/components/music-player"
-
-
 import {menus, clientWidth, clientHeight} from "./const"
 import {generateIntNumber} from "libs/motheds/maths"
 

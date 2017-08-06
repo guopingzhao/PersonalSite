@@ -8,6 +8,7 @@ import { CLASS_PREFIX as cp } from "../const"
 export default class Form extends PureComponent {
   static isForm = true
   static create = ce
+  static FormItem = item
   render() {
     return (
       <div className={cls(`${cp}-form`, this.props.cs)}>
@@ -24,5 +25,5 @@ export default class Form extends PureComponent {
   }
 }
 
-export const Item = item
+export const FormItem = item
 export const create = ce

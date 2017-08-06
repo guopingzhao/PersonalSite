@@ -60,7 +60,7 @@ const Validator = {
   }
 }
 
-export default function validate(validators, value) {
+export default function validate(validators = [], value) {
   if (!validators) return null
   const funcValidators = validators.map(validator => {
     const type = typeof validator

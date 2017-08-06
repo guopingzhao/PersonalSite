@@ -14,6 +14,8 @@ export default function create(options = {}) {
       childNum = {}
       initialValues = {}
       mapProps = {}
+      fields = new Set()
+      isWrapItem = new Map()
       constructor(props) {
         super(props)
         if (mapProps) {
@@ -49,24 +51,31 @@ export default function create(options = {}) {
             let type = typeof fields
             switch (type) {
             case "function": {
-              let errors = {}
+              let errors = {},
+                {values} = this.state,
+                allField = Array.from(this.fields)
               for (let v of Object.keys(this.rules)) {
                 if (this.childNum[v]) {
                   for (let i = 0, len = this.childNum[v]; i < len; i++) {
-                    errors[`${v}.${i}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
+                    if (this.fields.has(`${v}.${i}`)){
+                      errors[`${v}.${i}`] = validates(read(this.rules, `${v}`), read(values, `${v}.${i}`))                      
+                    }
                   }
                 } else {
-                  errors[`${v}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}`))
+                  if (this.fields.has(`${v}`)){
+                    errors[`${v}`] = validates(read(this.rules, `${v}`), read(values, `${v}`))
+                  }
                 }
               }
               this.setState({
                 errors
               }, () => {
                 let result = Object.values(errors).some(v => v)
+                let resVal = read(values, allField)
                 if (result) {
-                  fields(errors, this.state.values)
+                  fields(errors, resVal)
                 } else {
-                  fields(null, this.state.values)
+                  fields(null, resVal)
                 }
 
               })
@@ -97,24 +106,31 @@ export default function create(options = {}) {
               break
             }
             default: {
-              let errors = {}
+              let errors = {},
+                {values} = this.state,
+                allField = Array.from(this.fields)
               for (let v of Object.keys(this.rules)) {
                 if (this.childNum[v]) {
                   for (let i = 0, len = this.childNum[v]; i < len; i++) {
-                    errors[`${v}.${i}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}.${i}`))
+                    if (this.fields.has(`${v}.${i}`)){
+                      errors[`${v}.${i}`] = validates(read(this.rules, `${v}`), read(values, `${v}.${i}`))                      
+                    }
                   }
                 } else {
-                  errors[`${v}`] = validates(read(this.rules, `${v}`), read(this.state.values, `${v}`))
+                  if (this.fields.has(`${v}`)){
+                    errors[`${v}`] = validates(read(this.rules, `${v}`), read(values, `${v}`))
+                  }
                 }
               }
               this.setState({
                 errors
               }, () => {
                 let result = Object.values(errors).some(v => v)
+                let resVal = read(values, allField)
                 if (result) {
-                  res({ err: errors, values: this.state.values })
+                  res({ err: errors, values: resVal })
                 } else {
-                  res({ err: null, values: this.state.values })
+                  res({ err: null, values: resVal })
                 }
               })
             }
@@ -126,7 +142,7 @@ export default function create(options = {}) {
           this.setState({
             errors: write(this.state.errors, `${id}${i}`, valResult, { reduce: true })
           })
-          console.info(`${id}${i}`, value, valResult)
+          console.warn(`${id}${i}`, value, valResult)
         },
         getFieldError: (field) => {
           return read(this.state.errors, `${field}`)
@@ -155,6 +171,9 @@ export default function create(options = {}) {
             this.setState({ values: this.initialValues })
           }
         },
+        initFields: () => {
+          this.fields = new Set()
+        },
         getFieldDecorator: (id, options = {}) => {
           const {
 						rules,
@@ -167,8 +186,13 @@ export default function create(options = {}) {
             valueName = "value",
             trigger = "onChange",
             validateTrigger = "onChange"
-					} = options
+          } = options
           let isReuired = false
+
+          if (!this.isWrapItem.has(`${id}`)) {
+            this.isWrapItem.set(`${id}`, false)
+          }
+
           if (initialValue && read(this.initialValues, `${id}`) !== initialValue) {
             if (Array.isArray(initialValue)) {
               if (initialValue.length) this.initialValue = write(this.initialValue, `${id}`, initialValue)
@@ -251,15 +275,21 @@ export default function create(options = {}) {
         const { type, props } = Com
         if (type && props) {
           if (typeof type === "function" || ["input", "select", "textarea"].some(v => v === type)) {
+            this.fields.add(`${id}${i}`)
             if (read(this.state.values, `${id}${i}`) === undefined) {
               this.state.values = write(this.state.values, `${id}${i}`, read(this.initialValue, `${id}${i}`))
             }
-            const { onChange, onBlur } = props
+            const { onChange, onBlur } = props,
+              messageRes = this.form.getErrorInfo(`${id}${i}`, message, errorCom)
             return (
               <div
-                isReuired={isReuired}
+                data-isRequired={isReuired}
+                data-message={() => {
+                  this.isWrapItem.set(`${id}`, true)
+                  return messageRes
+                }}
                 className={cls(wrapClass, "decorator-wrap", {
-                  "validate-error": read(this.state.errors, `${id}${i}.length`)
+                  "validate-error": read(this.state.errors, `${id}${i}`)
                 })}
               >
                 {
@@ -288,9 +318,13 @@ export default function create(options = {}) {
                     className: cls("validate-error-child", props.className)
                   })
                 }
-                <div className="error-info">
-                  {this.form.getErrorInfo(`${id}${i}`, message, errorCom)}
-                </div>
+                {
+                  !this.isWrapItem.get(`${id}`) && (
+                    <div className="error-info">
+                      {messageRes}
+                    </div>
+                  )
+                }
               </div>
             )
           } else {
@@ -308,12 +342,14 @@ export default function create(options = {}) {
         return map(childs, (Com) => this.cloneChild(Com, { id, wrapClass, valueName, trigger, validateTrigger, allow, message, errorCom }, i))
       }
       render() {
-        return (<Com
-          {...this.props}
-          form={{ ...this.form }}
-          {...this.mapProps}
-          ref={(ele) => this.ele = ele}
-                />)
+        return (
+          <Com
+            {...this.props}
+            form={{ ...this.form }}
+            {...this.mapProps}
+            ref={(ele) => this.ele = ele}
+          />
+        )
       }
     }
   }

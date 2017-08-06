@@ -1,5 +1,7 @@
 const webpack = require("webpack")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const ImageminPlugin = require('imagemin-webpack-plugin').default
+const imageminMozjpeg = require("imagemin-mozjpeg")
 const autoprefixer = require("autoprefixer")
 const flexbugs = require('postcss-flexbugs-fixes')
 const path = require("path")
@@ -51,6 +53,19 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
+    }),
+    new ImageminPlugin({
+      test: /\.(jpe?g|png|gif|svg)$/i,
+      maxConcurrency: Infinity,
+      optipng: {
+        quality: 80
+      },
+      plugins: [
+        imageminMozjpeg({
+          quality: 80,
+          progressive: true
+        })
+      ]
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "app",

@@ -84,7 +84,7 @@ export function text(ctx, textOptions = {}, options = {}) {
 
 export function img(ctx, imgOptions = {}, options={}) {
   const {
-    x, y,
+    parameter,
     content
   } = imgOptions
   ctx.save()
@@ -93,11 +93,11 @@ export function img(ctx, imgOptions = {}, options={}) {
     let img = document.createElement("img")
     img.src = content
     img.onload = function () {
-      ctx.drawImage(img, x, y)
+      ctx.drawImage(img, ...parameter)
       ctx.restore()
     }
   } else {
-    ctx.drawImage(content, x, y)
+    ctx.drawImage(content, ...parameter)
     ctx.restore()
   }
 }

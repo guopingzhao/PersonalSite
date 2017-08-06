@@ -4,11 +4,11 @@ export function read(obj = {}, pathStr = "", options = {}) {
     let values = isArray ? [] : {}
     for (let v of pathStr) {
       if (reduce) {
-        values[v] = readObj(obj, pathStr, defaultValue, isTrue)
+        values[v] = readObj(obj, `${v}`, defaultValue, isTrue)
       } else if (isArray) {
-        values.push(readObj(obj, pathStr, defaultValue, isTrue))
+        values.push(readObj(obj, `${v}`, defaultValue, isTrue))
       } else {
-        write(values, `${v}`, readObj(obj, pathStr, defaultValue, isTrue))
+        values = write(values, `${v}`, readObj(obj, `${v}`, defaultValue, isTrue))
       }
     }
     return values

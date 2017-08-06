@@ -1,6 +1,5 @@
 @error-color: #f04134;
 .decorator-wrap {
-  position: relative;
   &.validate-error {
     border-color: @error-color;
     box-shadow: 0 0 0 2px rgba(240, 65, 52, 0.2);
@@ -10,8 +9,12 @@
     }
   }
   .error-info {
-    position: absolute;
-    top: 100%;
     color: @error-color;
+    float: left;
+    width: 100%;
+    &:after{
+      content: "";
+      clear: both;
+    }
   }
 }

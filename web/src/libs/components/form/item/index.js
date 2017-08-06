@@ -30,7 +30,16 @@ export default class FormItem extends PureComponent {
               </div>
             )
           }
-          <div>{children}</div>
+          <div
+            className={`${cp}-item-content`}
+          >
+            {children}
+          </div>
+          <div
+            className={`${cp}-item-error`}
+          >
+            {this.getMessage()}
+          </div>
         </div>
       </div>
     )
@@ -39,9 +48,17 @@ export default class FormItem extends PureComponent {
     const {isRequire, children} = this.props
     if (isRequire) return isRequire
     if (Array.isArray(children)) {
-      return children.some((child) => read(child, "props.isRequired"))
+      return children.some((child) => read(child, "props.data-isRequired"))
     } else {
-      return read(children, "props.isRequired")
+      return read(children, "props.data-isRequired")
+    }
+  }
+  getMessage() {
+    const {children} = this.props
+    if (Array.isArray(children)) {
+      return children.some((child) => read(child, "props.data-message", {defaultValue: () => null})())
+    } else {
+      return read(children, "props.data-message", {defaultValue: () => null})()
     }
   }
   static propTypes = {

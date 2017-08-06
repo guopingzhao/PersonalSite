@@ -1,6 +1,356 @@
-webpackJsonp([0],{
+webpackJsonp([0,4,13,18,19,26,33,34,35,36,37,38,39,40,41,42,43,56,57],{
 
-/***/ 440:
+/***/ 206:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.generateIntNumber = generateIntNumber;
+function generateIntNumber(g) {
+  var l = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var random = Math.random,
+      round = Math.round;
+
+  return round(random() * (g - l) + l);
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(generateIntNumber, "generateIntNumber", "F:/web/PersonalSite/web/src/libs/motheds/maths.js");
+}();
+
+;
+
+/***/ }),
+
+/***/ 208:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = trans;
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactIntl = __webpack_require__(212);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function trans(id) {
+  var values = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+  var valueMap = values.reduce(function (a, b, i) {
+    return Object.assign(a, _defineProperty({}, i, b));
+  }, {});
+  return _react2.default.createElement(_reactIntl.FormattedMessage, {
+    id: id,
+    values: valueMap
+  });
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(trans, "trans", "F:/web/PersonalSite/web/src/libs/trans.js");
+}();
+
+;
+
+/***/ }),
+
+/***/ 209:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.generateRandomColors = generateRandomColors;
+
+var _maths = __webpack_require__(206);
+
+function generateRandomColors() {
+  var colors = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var a = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var _colors$r = colors.r,
+      r = _colors$r === undefined ? {} : _colors$r,
+      _colors$g = colors.g,
+      g = _colors$g === undefined ? {} : _colors$g,
+      _colors$b = colors.b,
+      b = _colors$b === undefined ? {} : _colors$b,
+      _r$rl = r.rl,
+      rl = _r$rl === undefined ? 0 : _r$rl,
+      _r$rg = r.rg,
+      rg = _r$rg === undefined ? 255 : _r$rg,
+      _g$gl = g.gl,
+      gl = _g$gl === undefined ? 0 : _g$gl,
+      _g$gg = g.gg,
+      gg = _g$gg === undefined ? 255 : _g$gg,
+      _b$bl = b.bl,
+      bl = _b$bl === undefined ? 0 : _b$bl,
+      _b$bg = b.bg,
+      bg = _b$bg === undefined ? 255 : _b$bg;
+
+  return "rgba(" + (0, _maths.generateIntNumber)(rg, rl) + "," + (0, _maths.generateIntNumber)(gg, gl) + "," + (0, _maths.generateIntNumber)(bg, bl) + "," + a + ")";
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(generateRandomColors, "generateRandomColors", "F:/web/PersonalSite/web/src/libs/motheds/colors.js");
+}();
+
+;
+
+/***/ }),
+
+/***/ 213:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var menus = exports.menus = [{
+  index: 1,
+  name: "MyBlog",
+  path: "blog"
+}, {
+  index: 2,
+  name: "ChatRoom",
+  path: "chat"
+}];
+
+var _document$documentEle = document.documentElement;
+var clientWidth = _document$documentEle.clientWidth,
+    clientHeight = _document$documentEle.clientHeight;
+exports.clientWidth = clientWidth;
+exports.clientHeight = clientHeight;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(menus, "menus", "F:/web/PersonalSite/web/src/components/home/const.js");
+
+  __REACT_HOT_LOADER__.register(clientWidth, "clientWidth", "F:/web/PersonalSite/web/src/components/home/const.js");
+
+  __REACT_HOT_LOADER__.register(clientHeight, "clientHeight", "F:/web/PersonalSite/web/src/components/home/const.js");
+}();
+
+;
+
+/***/ }),
+
+/***/ 456:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 457:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/grid.png";
+
+/***/ }),
+
+/***/ 462:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 463:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg0.jpg";
+
+/***/ }),
+
+/***/ 464:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg1.jpg";
+
+/***/ }),
+
+/***/ 465:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg2.jpg";
+
+/***/ }),
+
+/***/ 466:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg3.jpg";
+
+/***/ }),
+
+/***/ 467:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg4.jpg";
+
+/***/ }),
+
+/***/ 468:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg5.jpg";
+
+/***/ }),
+
+/***/ 469:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg6.jpg";
+
+/***/ }),
+
+/***/ 470:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg7.jpg";
+
+/***/ }),
+
+/***/ 471:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg8.jpg";
+
+/***/ }),
+
+/***/ 472:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/homebg9.jpg";
+
+/***/ }),
+
+/***/ 487:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			return classNames;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+
+/***/ }),
+
+/***/ 488:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./homebg0.jpg": 463,
+	"./homebg1.jpg": 464,
+	"./homebg2.jpg": 465,
+	"./homebg3.jpg": 466,
+	"./homebg4.jpg": 467,
+	"./homebg5.jpg": 468,
+	"./homebg6.jpg": 469,
+	"./homebg7.jpg": 470,
+	"./homebg8.jpg": 471,
+	"./homebg9.jpg": 472
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 488;
+
+/***/ }),
+
+/***/ 73:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15,30 +365,23 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _class;
 
-// import Music from "libs/components/music-player"
-
-
 var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _redux = __webpack_require__(80);
+var _redux = __webpack_require__(146);
 
-var _reactRedux = __webpack_require__(124);
+var _reactRedux = __webpack_require__(145);
 
-var _trans = __webpack_require__(443);
-
-var _trans2 = _interopRequireDefault(_trans);
-
-var _item = __webpack_require__(445);
+var _item = __webpack_require__(88);
 
 var _item2 = _interopRequireDefault(_item);
 
-__webpack_require__(450);
+__webpack_require__(462);
 
-var _const = __webpack_require__(451);
+var _const = __webpack_require__(213);
 
-var _maths = __webpack_require__(444);
+var _maths = __webpack_require__(206);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -125,12 +468,14 @@ var Home = (_dec = (0, _reactRedux.connect)(function () {
     value: function render() {
       var _state = this.state,
           bg = _state.bg,
-          current = _state.current,
           items = _state.items;
 
       return _react2.default.createElement(
         "div",
-        { className: "home", style: { backgroundImage: "url(" + bg + ")" } },
+        {
+          className: "home",
+          style: { backgroundImage: "url(" + bg + ")" }
+        },
         _react2.default.createElement("div", { className: "home-music" }),
         _react2.default.createElement(
           "div",
@@ -140,9 +485,18 @@ var Home = (_dec = (0, _reactRedux.connect)(function () {
         _react2.default.createElement(
           "div",
           { className: "home-control" },
-          _react2.default.createElement("div", { className: "home-control-random", onClick: this.upsetMenus }),
-          _react2.default.createElement("div", { className: "home-control-row", onClick: this.setrow }),
-          _react2.default.createElement("div", { className: "home-control-img", onClick: this.updateBg })
+          _react2.default.createElement("div", {
+            className: "home-control-random",
+            onClick: this.upsetMenus
+          }),
+          _react2.default.createElement("div", {
+            className: "home-control-row",
+            onClick: this.setrow
+          }),
+          _react2.default.createElement("div", {
+            className: "home-control-img",
+            onClick: this.updateBg
+          })
         )
       );
     }
@@ -168,9 +522,23 @@ var Home = (_dec = (0, _reactRedux.connect)(function () {
               name = _menus.name,
               index = _menus.index;
 
-          items.push(_react2.default.createElement(_item2.default, { key: i, cs: "home-item", width: width, height: height, path: path, name: name, index: index, ismenu: true }));
+          items.push(_react2.default.createElement(_item2.default, {
+            key: i,
+            cs: "home-item",
+            width: width,
+            height: height,
+            path: path,
+            name: name,
+            index: index,
+            ismenu: true
+          }));
         } else {
-          items.push(_react2.default.createElement(_item2.default, { key: i, cs: "home-item", width: width, height: height }));
+          items.push(_react2.default.createElement(_item2.default, {
+            key: i,
+            cs: "home-item",
+            width: width,
+            height: height
+          }));
         }
       };
 
@@ -187,7 +555,7 @@ var Home = (_dec = (0, _reactRedux.connect)(function () {
       var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 9;
 
       var i = (0, _maths.generateIntNumber)(num);
-      return __webpack_require__(452)("./homebg" + i + ".jpg");
+      return __webpack_require__(488)("./homebg" + i + ".jpg");
     }
   }, {
     key: "componentWillMount",
@@ -219,81 +587,7 @@ var _temp2 = function () {
 
 /***/ }),
 
-/***/ 443:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = trans;
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactIntl = __webpack_require__(183);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function trans(id) {
-  var values = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-  var valueMap = values.reduce(function (a, b, i) {
-    return Object.assign(a, _defineProperty({}, i, b));
-  }, {});
-  return _react2.default.createElement(_reactIntl.FormattedMessage, { id: id, values: valueMap });
-}
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(trans, "trans", "F:/web/PersonalSite/web/src/libs/trans.js");
-}();
-
-;
-
-/***/ }),
-
-/***/ 444:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.generateIntNumber = generateIntNumber;
-function generateIntNumber(g) {
-  var l = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var random = Math.random,
-      round = Math.round;
-
-  return round(random() * (g - l) + l);
-}
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(generateIntNumber, "generateIntNumber", "F:/web/PersonalSite/web/src/libs/motheds/maths.js");
-}();
-
-;
-
-/***/ }),
-
-/***/ 445:
+/***/ 88:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -312,19 +606,19 @@ var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(125);
+var _reactRouterDom = __webpack_require__(144);
 
-var _classnames = __webpack_require__(446);
+var _classnames = __webpack_require__(487);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _trans = __webpack_require__(443);
+var _trans = __webpack_require__(208);
 
 var _trans2 = _interopRequireDefault(_trans);
 
-var _colors = __webpack_require__(447);
+var _colors = __webpack_require__(209);
 
-__webpack_require__(448);
+__webpack_require__(456);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -334,7 +628,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var style = document.documentElement.style;
 var MenuItem = (_temp2 = _class = function (_PureComponent) {
   _inherits(MenuItem, _PureComponent);
 
@@ -421,7 +714,7 @@ var MenuItem = (_temp2 = _class = function (_PureComponent) {
 
   return MenuItem;
 }(_react.PureComponent), _class.defaultProps = {
-  images: __webpack_require__(449)
+  images: __webpack_require__(457)
 }, _temp2);
 exports.default = MenuItem;
 ;
@@ -431,285 +724,10 @@ var _temp3 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(style, "style", "F:/web/PersonalSite/web/src/components/home/components/item/index.js");
-
   __REACT_HOT_LOADER__.register(MenuItem, "MenuItem", "F:/web/PersonalSite/web/src/components/home/components/item/index.js");
 }();
 
 ;
-
-/***/ }),
-
-/***/ 446:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if (typeof module !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	} else if (true) {
-		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {
-		window.classNames = classNames;
-	}
-}());
-
-
-/***/ }),
-
-/***/ 447:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.generateRandomColors = generateRandomColors;
-
-var _maths = __webpack_require__(444);
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function generateRandomColors() {
-  var _colors;
-
-  var colors = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var a = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  var r = {},
-      g = {},
-      b = (_colors = colors, _objectDestructuringEmpty(_colors), _colors),
-      _r$rl = r.rl,
-      rl = _r$rl === undefined ? 0 : _r$rl,
-      _r$rg = r.rg,
-      rg = _r$rg === undefined ? 255 : _r$rg,
-      _g$gl = g.gl,
-      gl = _g$gl === undefined ? 0 : _g$gl,
-      _g$gg = g.gg,
-      gg = _g$gg === undefined ? 255 : _g$gg,
-      _b$bl = b.bl,
-      bl = _b$bl === undefined ? 0 : _b$bl,
-      _b$bg = b.bg,
-      bg = _b$bg === undefined ? 255 : _b$bg;
-  return "rgba(" + (0, _maths.generateIntNumber)(rg, rl) + "," + (0, _maths.generateIntNumber)(gg, gl) + "," + (0, _maths.generateIntNumber)(bg, bl) + "," + a + ")";
-}
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(generateRandomColors, "generateRandomColors", "F:/web/PersonalSite/web/src/libs/motheds/colors.js");
-}();
-
-;
-
-/***/ }),
-
-/***/ 448:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 449:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/grid.png";
-
-/***/ }),
-
-/***/ 450:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 451:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var menus = exports.menus = [{
-  index: 1,
-  name: "MyBlog",
-  path: "blog"
-}, {
-  index: 2,
-  name: "ChatRoom",
-  path: "chat"
-}];
-
-var _document$documentEle = document.documentElement;
-var clientWidth = _document$documentEle.clientWidth,
-    clientHeight = _document$documentEle.clientHeight;
-exports.clientWidth = clientWidth;
-exports.clientHeight = clientHeight;
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(menus, "menus", "F:/web/PersonalSite/web/src/components/home/const.js");
-
-  __REACT_HOT_LOADER__.register(clientWidth, "clientWidth", "F:/web/PersonalSite/web/src/components/home/const.js");
-
-  __REACT_HOT_LOADER__.register(clientHeight, "clientHeight", "F:/web/PersonalSite/web/src/components/home/const.js");
-}();
-
-;
-
-/***/ }),
-
-/***/ 452:
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./homebg0.jpg": 453,
-	"./homebg1.jpg": 454,
-	"./homebg2.jpg": 455,
-	"./homebg3.jpg": 456,
-	"./homebg4.jpg": 457,
-	"./homebg5.jpg": 458,
-	"./homebg6.jpg": 459,
-	"./homebg7.jpg": 460,
-	"./homebg8.jpg": 461,
-	"./homebg9.jpg": 462
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 452;
-
-/***/ }),
-
-/***/ 453:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg0.jpg";
-
-/***/ }),
-
-/***/ 454:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg1.jpg";
-
-/***/ }),
-
-/***/ 455:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg2.jpg";
-
-/***/ }),
-
-/***/ 456:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg3.jpg";
-
-/***/ }),
-
-/***/ 457:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg4.jpg";
-
-/***/ }),
-
-/***/ 458:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg5.jpg";
-
-/***/ }),
-
-/***/ 459:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg6.jpg";
-
-/***/ }),
-
-/***/ 460:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg7.jpg";
-
-/***/ }),
-
-/***/ 461:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg8.jpg";
-
-/***/ }),
-
-/***/ 462:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/homebg9.jpg";
 
 /***/ })
 

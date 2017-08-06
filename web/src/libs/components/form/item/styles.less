@@ -1,34 +1,40 @@
 @import "../../vars.less";
 .zgp-item {
-  display: inline-block;
   position: relative;
+  margin-bottom: 16px;
+  &:after{
+    content: "";
+    clear: both;
+    display: block;
+  }
   &-warp {
-    display: flex;
     min-height: 20px;
+    position: relative;
   }
   &-label {
-    background-color: #eef;
-    display: flex;
-    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: .2rem;
+    line-height: .2rem;
     span {
       color: #f04134;
+      line-height: 1;
     }
   }
   &-error {
+    float: left;
     min-height: 18px;
     color: #f04134;
+    margin-top: 2px;
+    &:after{
+      content: "";
+      clear: both;
+      display: block;
+    }
   }
   &-content {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    border: 1px solid transparent;
-    transition: all .5s;
-    &.item-error-border {
-      border: 1px solid #f04134 !important;
-      box-shadow: 0 0 0 2px rgba(240, 65, 52, .2) !important;
-      border-radius: 4px;
-    }
+    display: inline-block;
   }
 }

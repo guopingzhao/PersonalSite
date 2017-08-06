@@ -1,4 +1,4 @@
-import update from "immutability-helper"
+import {write} from "libs/util/objTool"
 
 import {APP_SET_LOCALE} from "../actions"
 
@@ -7,13 +7,7 @@ const initialState = {
 }
 
 const handlers = {
-  [APP_SET_LOCALE]: (state, data) => {
-    return update(state, {
-      $set: {
-        locale: data
-      }
-    })
-  }
+  [APP_SET_LOCALE]: (state, data) => write(state, "locale", data)
 }
 
 export default (state=initialState, action) => {

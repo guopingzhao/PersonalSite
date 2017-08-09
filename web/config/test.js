@@ -4,10 +4,12 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default
 const imageminMozjpeg = require("imagemin-mozjpeg")
 const autoprefixer = require("autoprefixer")
 const flexbugs = require('postcss-flexbugs-fixes')
+const CompressionPlugin = require('compression-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require("path")
 module.exports = {
   entry: {
-    index: "./src/index.js"
+    app: "./src/index.js"
   },
   output: {
     path: path.resolve("test"),
@@ -46,6 +48,7 @@ module.exports = {
       allChunks: true
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
       "process.env.PROD": false
@@ -53,6 +56,14 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_debugger: true,
+        drop_console: true
+      }
     }),
     new ImageminPlugin({
       test: /\.(jpe?g|png|gif|svg)$/i,
@@ -81,16 +92,24 @@ module.exports = {
       name: "app",
       children: true,
       async: "used-twice",
-      minChunks: (module, count) => (count > 1)
+      minChunks: (module, count) => (count >= 2)
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: "vender",
+      name: "app",
       filename: "js/common.[chunkhash:8].js",
       minChunks: ({ resource }) => (
         resource &&
         resource.indexOf("node_modules") >= 0 &&
-        resource.match(/\.js$/)
+        resource.match(/\.jsx?$/)
       )
-    })
+    }),
+    new CompressionPlugin({
+      asset: "[path].gz",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0
+    }),
+    new BundleAnalyzerPlugin()
   ],
 }

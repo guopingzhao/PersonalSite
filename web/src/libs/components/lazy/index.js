@@ -28,9 +28,6 @@ export default class Lazy extends PureComponent {
     case "function":
       module = await load()
       break
-    case "string":
-      module = (await import(`../../../${load}`)).default
-      break
     case "object":
       module = await load
       break

@@ -10,7 +10,7 @@
     "dev": "webpack-dev-server --open",
     "lint": "eslint_d --ignore-path .jshintignore --fix src",
     "prod": "npm run clean | webpack -p --display-optimization-bailout --env.prod=prod",
-    "test": "npm run cleanTest | webpack --display-optimization-bailout --env.prod=test",
+    "test": "npm run cleanTest | webpack  --progress --display-optimization-bailout --env.prod=test",
     "start": "npm run dev"
   },
   "lint-staged": {
@@ -74,9 +74,12 @@
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^2.0.2",
     "style-loader": "^0.17.0",
-    "webpack": "^3.4.1",
+    "webpack": "^3.5.1",
     "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "compression-webpack-plugin": "^1.0.0",
+    "webpack-bundle-analyzer": "^2.9.0"
+  }
 }
